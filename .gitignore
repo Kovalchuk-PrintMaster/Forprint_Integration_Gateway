@@ -64,3 +64,6 @@ Thumbs.db
 *.tar
 *.tar.gz
 *.tgz
+
+# Generated local reports
+reports/

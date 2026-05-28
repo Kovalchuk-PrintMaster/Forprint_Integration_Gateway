@@ -1,7 +1,7 @@
 PYTHON=.venv_gateway/bin/python
 PIP=.venv_gateway/bin/pip
 
-.PHONY: install test lint format check clean
+.PHONY: install test lint format check check-report clean
 
 install:
 	$(PIP) install --upgrade pip
@@ -11,12 +11,15 @@ test:
 	$(PYTHON) -m pytest -q
 
 lint:
-	$(PYTHON) -m ruff check app tests
+	$(PYTHON) -m ruff check app tests scripts
 
 format:
-	$(PYTHON) -m ruff format app tests
+	$(PYTHON) -m ruff format app tests scripts
 
 check: lint test
+
+check-report:
+	$(PYTHON) scripts/run_gateway_checks.py
 
 clean:
 	find . -type d -name "__pycache__" -prune -exec rm -rf {} +
