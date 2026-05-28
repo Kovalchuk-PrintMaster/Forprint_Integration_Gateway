@@ -3,7 +3,7 @@ routes:
     source_module: forprint_crm
     target_module: forprint_calculator_engine
     contract_id: calculator.quote_request.v1
-    operation: quote.preview.requested
+    operation: quote.recalculation.requested
     enabled: true
     priority: 100
 

@@ -1,5 +1,10 @@
 """Services for ForPrint Integration Gateway."""
 
+from forprint_integration_gateway.services.example_loader import (
+    load_contract_fixture,
+    load_example_request,
+    load_example_response,
+)
 from forprint_integration_gateway.services.gateway_processor import GatewayProcessor
 from forprint_integration_gateway.services.idempotency import InMemoryIdempotencyService
 from forprint_integration_gateway.services.router import RouteNotFoundError, SimpleRouter
@@ -11,4 +16,7 @@ __all__ = [
     "RouteNotFoundError",
     "SimpleRouter",
     "SimpleValidator",
+    "load_contract_fixture",
+    "load_example_request",
+    "load_example_response",
 ]

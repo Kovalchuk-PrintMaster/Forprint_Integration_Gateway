@@ -1,0 +1,19 @@
+contract_id: calculator.quote_response.v1
+version: v1
+producer: forprint_calculator_engine
+consumer: forprint_crm
+operation: quote.preview.completed
+description: >
+  Documentation-only placeholder fixture for Calculator Engine quote result
+  response returned toward CRM.
+
+required_payload_fields:
+  - quote_draft_id
+  - price_breakdown_ref
+
+example_request_file: null
+example_response_file:
+  - examples/responses/calculator_to_crm_quote_result_response.json
+
+fixture_status: documentation_only
+canonical_contract_truth: forprint_library_future

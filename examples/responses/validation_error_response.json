@@ -1,0 +1,23 @@
+{
+  "request_id": "unknown",
+  "correlation_id": "unknown",
+  "target_module": "unknown",
+  "status": "validation_failed",
+  "result_payload": {},
+  "errors": [
+    {
+      "code": "missing_required_field",
+      "message": "Required field is missing: idempotency_key",
+      "field_path": "idempotency_key",
+      "severity": "error",
+      "is_retryable": false
+    }
+  ],
+  "warnings": [],
+  "metadata": {
+    "gateway_stage": "validation",
+    "routed": false,
+    "example": true
+  },
+  "created_at": "2026-05-26T00:00:01+00:00"
+}

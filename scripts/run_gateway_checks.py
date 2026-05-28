@@ -95,6 +95,83 @@ def run_command_check(name: str, expected_result: str, command: list[str]) -> Ch
         details="\n".join(details_parts),
     )
 
+def validate_examples_and_contract_fixtures() -> CheckResult:
+    """Validate local v0.2 example files and documentation-only contract fixtures."""
+    started_at = time.perf_counter()
+
+    try:
+        required_example_files = [
+            PROJECT_ROOT / "examples" / "requests" / "customer_channel_quote_preview_request.json",
+            PROJECT_ROOT
+            / "examples"
+            / "requests"
+            / "crm_to_calculator_quote_recalculation_request.json",
+            PROJECT_ROOT / "examples" / "requests" / "crm_to_accounting_invoice_request.json",
+            PROJECT_ROOT
+            / "examples"
+            / "responses"
+            / "calculator_to_crm_quote_result_response.json",
+            PROJECT_ROOT / "examples" / "responses" / "validation_error_response.json",
+            PROJECT_ROOT / "examples" / "contracts" / "calculator.quote_request.v1.yaml",
+            PROJECT_ROOT / "examples" / "contracts" / "calculator.quote_response.v1.yaml",
+            PROJECT_ROOT / "examples" / "contracts" / "accounting.invoice_request.v1.yaml",
+        ]
+
+        missing_files = [
+            str(path.relative_to(PROJECT_ROOT)) 
+            for path in required_example_files 
+            if not path.exists()
+        ]
+        if missing_files:
+            raise FileNotFoundError("Missing v0.2 example file(s): " + ", ".join(missing_files))
+
+        for path in required_example_files:
+            if path.suffix == ".json":
+                json.loads(path.read_text(encoding="utf-8"))
+            elif path.suffix in {".yaml", ".yml"}:
+                fixture = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+
+                required_contract_fields = {
+                    "contract_id",
+                    "version",
+                    "producer",
+                    "consumer",
+                    "operation",
+                    "description",
+                    "required_payload_fields",
+                    "example_request_file",
+                    "example_response_file",
+                    "fixture_status",
+                    "canonical_contract_truth",
+                }
+
+                missing_contract_fields = sorted(required_contract_fields - set(fixture))
+                if missing_contract_fields:
+                    raise ValueError(
+                        f"{path.name} misses field(s): " + ", ".join(missing_contract_fields)
+                    )
+
+                if fixture["fixture_status"] != "documentation_only":
+                    raise ValueError(f"{path.name} must be documentation_only")
+
+                if fixture["canonical_contract_truth"] != "forprint_library_future":
+                    raise ValueError(f"{path.name} must point canonical truth to Library future")
+
+        status = "OK"
+        details = "Examples and documentation-only contract fixtures validation passed"
+
+    except Exception as exc:
+        status = "FAIL"
+        details = str(exc)
+
+    return CheckResult(
+        name="Examples/contracts validation",
+        expected_result="v0.2 examples і documentation-only contract fixtures валідні",
+        status=status,
+        duration_seconds=time.perf_counter() - started_at,
+        command=None,
+        details=details,
+    )
 
 def validate_manifest() -> CheckResult:
     """Validate minimal Blueprint-compatible module manifest fields."""
@@ -369,20 +446,26 @@ def main() -> int:
     console.print("🔎 Running ForPrint Integration Gateway checks...")
 
     results = [
-        run_command_check(
-            name="Ruff lint",
-            expected_result="Немає lint-помилок у app/tests/scripts",
-            command=[sys.executable, "-m", "ruff", "check", "app", "tests", "scripts"],
-        ),
-        run_command_check(
-            name="Pytest",
-            expected_result="Усі тести проходять",
-            command=[sys.executable, "-m", "pytest", "-q"],
-        ),
-        validate_manifest(),
-        validate_routes(),
-        validate_gateway_boundaries_doc(),
-    ]
+		run_command_check(
+			name="Ruff lint",
+			expected_result="Немає lint-помилок у app/tests/scripts",
+			command=[sys.executable, "-m", "ruff", "check", "app", "tests", "scripts"],
+		),
+		run_command_check(
+			name="Pytest",
+			expected_result="Усі тести проходять",
+			command=[sys.executable, "-m", "pytest", "-q"],
+		),
+		run_command_check(
+			name="Gateway smoke runner",
+			expected_result="Локальний GatewayProcessor проходить smoke-сценарій",
+			command=[sys.executable, "scripts/run_gateway_smoke.py"],
+		),
+		validate_examples_and_contract_fixtures(),
+		validate_manifest(),
+		validate_routes(),
+		validate_gateway_boundaries_doc(),
+	]
 
     for result in results:
         status_label = "OK" if result.status == "OK" else "FAIL"

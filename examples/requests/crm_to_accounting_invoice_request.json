@@ -1,0 +1,26 @@
+{
+  "request_id": "example_req_crm_invoice_creation_001",
+  "correlation_id": "example_corr_invoice_creation_001",
+  "idempotency_key": "example_idem_crm_invoice_creation_001",
+  "source_module": "forprint_crm",
+  "source_channel": "crm",
+  "target_module": "forprint_accounting_registry_service",
+  "contract_id": "accounting.invoice_request.v1",
+  "contract_version": "v1",
+  "operation": "invoice.creation.requested",
+  "payload": {
+    "order_id": "example_order_001",
+    "client_ref": "example_client_ref_001",
+    "invoice_reason": "confirmed_order",
+    "amount_context": {
+      "currency": "UAH",
+      "source": "crm_confirmed_quote"
+    }
+  },
+  "metadata": {
+    "example": true,
+    "channel_agnostic": true,
+    "mobile_app_ready": true
+  },
+  "created_at": "2026-05-26T00:00:00+00:00"
+}

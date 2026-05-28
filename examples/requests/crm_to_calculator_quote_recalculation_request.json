@@ -1,0 +1,28 @@
+{
+  "request_id": "example_req_crm_quote_recalculation_001",
+  "correlation_id": "example_corr_quote_recalculation_001",
+  "idempotency_key": "example_idem_crm_quote_recalculation_001",
+  "source_module": "forprint_crm",
+  "source_channel": "crm",
+  "target_module": "forprint_calculator_engine",
+  "contract_id": "calculator.quote_request.v1",
+  "contract_version": "v1",
+  "operation": "quote.recalculation.requested",
+  "payload": {
+    "quote_draft_id": "example_quote_draft_001",
+    "requested_changes": {
+      "quantity": 1000,
+      "print_sides": 2
+    },
+    "business_context": {
+      "initiated_by": "crm_operator",
+      "reason": "customer_changed_quantity"
+    }
+  },
+  "metadata": {
+    "example": true,
+    "channel_agnostic": true,
+    "mobile_app_ready": true
+  },
+  "created_at": "2026-05-26T00:00:00+00:00"
+}

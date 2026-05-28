@@ -1,0 +1,19 @@
+{
+  "request_id": "example_req_calculator_quote_result_001",
+  "correlation_id": "example_corr_quote_preview_001",
+  "target_module": "forprint_crm",
+  "status": "completed",
+  "result_payload": {
+    "quote_draft_id": "example_quote_draft_001",
+    "price_breakdown_ref": "example_price_breakdown_001",
+    "material_consumption_estimate_ref": "example_material_estimate_001"
+  },
+  "errors": [],
+  "warnings": [],
+  "metadata": {
+    "example": true,
+    "source_module": "forprint_calculator_engine",
+    "contract_id": "calculator.quote_response.v1"
+  },
+  "created_at": "2026-05-26T00:00:01+00:00"
+}

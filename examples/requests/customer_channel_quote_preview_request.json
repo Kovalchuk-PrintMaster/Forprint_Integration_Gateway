@@ -1,0 +1,29 @@
+{
+  "request_id": "example_req_customer_channel_quote_preview_001",
+  "correlation_id": "example_corr_quote_preview_001",
+  "idempotency_key": "example_idem_customer_channel_quote_preview_001",
+  "source_module": "customer_channel",
+  "source_channel": "customer_channel",
+  "target_module": "forprint_calculator_engine",
+  "contract_id": "calculator.quote_request.v1",
+  "contract_version": "v1",
+  "operation": "quote.preview.requested",
+  "payload": {
+    "customer_action": "quote_preview",
+    "customer_session": {
+      "session_id": "example_customer_session_001",
+      "channel_family": "customer_channel"
+    },
+    "product_request": {
+      "product_type": "business_card",
+      "quantity": 500,
+      "print_sides": 2
+    }
+  },
+  "metadata": {
+    "example": true,
+    "channel_agnostic": true,
+    "mobile_app_ready": true
+  },
+  "created_at": "2026-05-26T00:00:00+00:00"
+}

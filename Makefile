@@ -1,7 +1,7 @@
 PYTHON=.venv_gateway/bin/python
 PIP=.venv_gateway/bin/pip
 
-.PHONY: install test lint format check check-report clean
+.PHONY: install test lint format check smoke check-report clean
 
 install:
 	$(PIP) install --upgrade pip
@@ -17,6 +17,9 @@ format:
 	$(PYTHON) -m ruff format app tests scripts
 
 check: lint test
+
+smoke:
+	$(PYTHON) scripts/run_gateway_smoke.py
 
 check-report:
 	$(PYTHON) scripts/run_gateway_checks.py

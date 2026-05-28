@@ -1,0 +1,21 @@
+contract_id: accounting.invoice_request.v1
+version: v1
+producer: forprint_crm
+consumer: forprint_accounting_registry_service
+operation: invoice.creation.requested
+description: >
+  Documentation-only placeholder fixture for invoice creation request sent
+  from CRM toward Accounting Registry.
+
+required_payload_fields:
+  - order_id
+  - client_ref
+  - invoice_reason
+
+example_request_file:
+  - examples/requests/crm_to_accounting_invoice_request.json
+
+example_response_file: null
+
+fixture_status: documentation_only
+canonical_contract_truth: forprint_library_future

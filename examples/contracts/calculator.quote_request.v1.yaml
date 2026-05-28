@@ -1,0 +1,22 @@
+contract_id: calculator.quote_request.v1
+version: v1
+producer: forprint_crm_or_customer_channel
+consumer: forprint_calculator_engine
+operation: quote.preview.requested
+related_operations:
+  - quote.recalculation.requested
+description: >
+  Documentation-only placeholder fixture for quote preview and quote
+  recalculation requests sent toward Calculator Engine.
+
+required_payload_fields:
+  - product_request
+
+example_request_file:
+  - examples/requests/customer_channel_quote_preview_request.json
+  - examples/requests/crm_to_calculator_quote_recalculation_request.json
+
+example_response_file: null
+
+fixture_status: documentation_only
+canonical_contract_truth: forprint_library_future
