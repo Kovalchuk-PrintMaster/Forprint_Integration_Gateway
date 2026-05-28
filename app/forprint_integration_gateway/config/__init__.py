@@ -1,0 +1,1 @@
+"""Local configuration package for ForPrint Integration Gateway."""

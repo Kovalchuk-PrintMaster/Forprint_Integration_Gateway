@@ -1,0 +1,95 @@
+
+module_id: forprint_integration_gateway
+module_name: ForPrint Integration Gateway
+title: ForPrint Integration Gateway
+role: contract_transport_and_validation_layer
+status: bootstrap_development
+
+description: >
+  ForPrint Integration Gateway is the validation, normalization, routing,
+  audit, correlation and idempotency boundary between customer channels,
+  CRM and internal ForPrint modules. It must not own business truth or make
+  business workflow decisions.
+
+owns:
+  - integration_request
+  - integration_response
+  - validation_error
+  - routing_rule
+  - correlation_context
+  - idempotency_record
+  - integration_audit_event
+  - security_filter_event
+  - command_delivery_status
+  - module_response_envelope
+
+consumes:
+  - route_definitions
+  - contract_definitions
+  - business_commands
+  - customer_channel_requests
+  - module_responses
+
+provides:
+  - request_validation_boundary
+  - routing_boundary
+  - idempotency_boundary
+  - correlation_context_boundary
+  - module_response_envelope
+
+interfaces:
+  planned:
+    - customer_channel_request_intake
+    - crm_business_command_intake
+    - internal_module_response_intake
+
+planned_integrations:
+  - forprint_crm
+  - forprint_library
+  - forprint_calculator_engine
+  - forprint_accounting_registry_service
+  - forprint_prepress_hub
+  - project_inspector
+
+dependencies:
+  runtime:
+    - pyyaml
+  development:
+    - pytest
+    - ruff
+  future_planned:
+    - forprint_library_contract_registry
+    - project_inspector_module_status
+
+must_not_own:
+  - client_registry
+  - order_registry
+  - material_catalog
+  - product_catalog
+  - price_calculation
+  - invoice
+  - payment_status
+  - warehouse_stock
+  - business_workflow_decisions
+  - ui_dashboard_state
+  - architecture_governance
+
+customer_channel_policy:
+  channel_agnostic: true
+  source_channel_is_plain_string_for_v0_1: true
+  recommended_source_channel_values:
+    - telegram
+    - website
+    - mobile_app
+    - crm
+    - internal_module
+  planned_future_channels:
+    - mobile_app
+
+initial_status:
+  production_api: false
+  database_migrations: false
+  real_module_integrations: false
+  complex_message_bus: false
+  async_queue_infrastructure: false
+  local_placeholder_routes_only: true

@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forprint-integration-gateway"
+version = "0.1.0"
+description = "ForPrint Integration Gateway bootstrap package: validation, routing, correlation and idempotency boundary."
+requires-python = ">=3.11,<3.12"
+readme = "README.md"
+authors = [
+    { name = "ForPrint" }
+]
+dependencies = [
+    "PyYAML>=6.0.1,<7.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0,<9.0.0",
+    "ruff>=0.6.0,<1.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["app"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["app", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = []

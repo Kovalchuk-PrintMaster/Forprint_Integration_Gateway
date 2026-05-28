@@ -1,0 +1,64 @@
+routes:
+  - route_id: crm_to_calculator_quote_recalculation
+    source_module: forprint_crm
+    target_module: forprint_calculator_engine
+    contract_id: calculator.quote_request.v1
+    operation: quote.preview.requested
+    enabled: true
+    priority: 100
+
+  - route_id: crm_to_accounting_invoice_request
+    source_module: forprint_crm
+    target_module: forprint_accounting_registry_service
+    contract_id: accounting.invoice_request.v1
+    operation: invoice.creation.requested
+    enabled: true
+    priority: 100
+
+  - route_id: crm_to_prepress_job_request
+    source_module: forprint_crm
+    target_module: forprint_prepress_hub
+    contract_id: prepress.job_request.v1
+    operation: prepress.job.requested
+    enabled: true
+    priority: 100
+
+  - route_id: customer_channel_to_crm_order_intake
+    source_module: customer_channel
+    target_module: forprint_crm
+    contract_id: crm.order_intake.v1
+    operation: order.intake.submitted
+    enabled: true
+    priority: 100
+
+  - route_id: customer_channel_to_calculator_quote_preview
+    source_module: customer_channel
+    target_module: forprint_calculator_engine
+    contract_id: calculator.quote_request.v1
+    operation: quote.preview.requested
+    enabled: true
+    priority: 100
+
+  - route_id: calculator_to_crm_quote_result
+    source_module: forprint_calculator_engine
+    target_module: forprint_crm
+    contract_id: calculator.quote_response.v1
+    operation: quote.preview.completed
+    enabled: true
+    priority: 100
+
+  - route_id: accounting_to_crm_invoice_status
+    source_module: forprint_accounting_registry_service
+    target_module: forprint_crm
+    contract_id: accounting.invoice_status.v1
+    operation: invoice.status.updated
+    enabled: true
+    priority: 100
+
+  - route_id: prepress_to_crm_prepress_status
+    source_module: forprint_prepress_hub
+    target_module: forprint_crm
+    contract_id: prepress.status.v1
+    operation: prepress.status.updated
+    enabled: true
+    priority: 100
