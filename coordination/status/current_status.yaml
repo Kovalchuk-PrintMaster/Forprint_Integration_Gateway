@@ -1,0 +1,33 @@
+module_name: forprint_integration_gateway
+module_status: active
+priority: high
+current_phase: governance_alignment_v0_1
+last_completed_step: gateway_v0_2_accepted
+last_updated: "{now}"
+branch: {branch}
+last_commit: {commit}
+
+checks:
+  make_check: pending
+  make_check_report: pending
+  governance_check: pending
+
+boundary:
+  no_foreign_ownership: true
+  no_production_api: true
+  no_live_write: true
+  no_real_integrations: true
+
+boundaries:
+  validation_routing_only: true
+  no_business_brain: true
+  no_operational_database_ownership: true
+  no_client_order_accounting_warehouse_ownership: true
+  no_external_runtime_api_enabled: true
+
+validation:
+  make_check: pending
+  make_check_report: pending
+  governance_alignment: pending
+
+recommended_next_step: maintain_gateway_boundary_and_wait_for_next_blueprint_directive
