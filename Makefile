@@ -87,3 +87,13 @@ governance-check:
 	$(MAKE) module-policy-check
 	$(MAKE) coordination-check
 	$(MAKE) status-report
+
+.PHONY: blueprint-prompts-list
+blueprint-prompts-list:
+	$(MAKE) blueprint-pull
+	@cat /srv/software_development/forprint-project/forprint_system_blueprint/coordination/outgoing_prompts/forprint_integration_gateway/index.yaml
+
+.PHONY: blueprint-prompt
+blueprint-prompt:
+	$(MAKE) blueprint-pull
+	$(PYTHON) scripts/read_blueprint_outgoing_prompt.py
