@@ -1,0 +1,32 @@
+{
+  "intake_id": "invalid_missing_contact_001",
+  "channel_source": "telegram_bot",
+  "source_channel_request_id": "telegram_message_invalid_001",
+  "client_identity_hint": {
+    "external_channel_user_id": null,
+    "client_ref": null,
+    "contact_hint": {
+      "phone": null,
+      "email": null,
+      "username": null,
+      "display_name": null
+    }
+  },
+  "business_request_payload": {
+    "request_kind": "new_order_request",
+    "summary": "Invalid request without client identity/contact hint.",
+    "details": {
+      "product_hint": "stickers"
+    },
+    "attachments": []
+  },
+  "raw_channel_values": {
+    "raw_text": "Хочу наклейки"
+  },
+  "metadata": {
+    "example": true,
+    "expected_validation_failure": true,
+    "live_runtime_enabled": false
+  },
+  "received_at": "2026-06-10T00:06:00+00:00"
+}

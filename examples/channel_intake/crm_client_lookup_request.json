@@ -1,0 +1,32 @@
+{
+  "intake_id": "crm_client_lookup_001",
+  "channel_source": "forprint_crm",
+  "source_channel_request_id": "crm_action_3001",
+  "client_identity_hint": {
+    "external_channel_user_id": null,
+    "client_ref": "client_ref_example_002",
+    "contact_hint": {
+      "phone": "+380000000003",
+      "email": null,
+      "username": null,
+      "display_name": "CRM Example Client"
+    }
+  },
+  "business_request_payload": {
+    "request_kind": "client_lookup_request",
+    "summary": "CRM asks Gateway to prepare client lookup handoff candidate.",
+    "details": {
+      "lookup_reason": "operator_checks_existing_client",
+      "known_phone": "+380000000003"
+    },
+    "attachments": []
+  },
+  "raw_channel_values": {
+    "crm_operator_id": "operator_example_001"
+  },
+  "metadata": {
+    "example": true,
+    "live_runtime_enabled": false
+  },
+  "received_at": "2026-06-10T00:03:00+00:00"
+}

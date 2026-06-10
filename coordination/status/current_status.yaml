@@ -1,8 +1,8 @@
 module_name: forprint_integration_gateway
 module_status: active
 priority: high
-current_phase: governance_alignment_v0_1
-last_completed_step: gateway_v0_2_accepted
+current_phase: channel_intake_operational_handoff_contracts_v0_3
+last_completed_step: gateway_channel_intake_contracts_ready
 last_updated: "{now}"
 branch: {branch}
 last_commit: {commit}

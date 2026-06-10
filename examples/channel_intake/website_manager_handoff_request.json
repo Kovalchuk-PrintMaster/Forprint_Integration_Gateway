@@ -1,0 +1,32 @@
+{
+  "intake_id": "website_manager_handoff_001",
+  "channel_source": "website",
+  "source_channel_request_id": "website_form_2002",
+  "client_identity_hint": {
+    "external_channel_user_id": null,
+    "client_ref": null,
+    "contact_hint": {
+      "phone": "+380000000005",
+      "email": "handoff@example.com",
+      "username": null,
+      "display_name": "Website Handoff Client"
+    }
+  },
+  "business_request_payload": {
+    "request_kind": "manager_handoff_request",
+    "summary": "Client asks for manager contact.",
+    "details": {
+      "reason": "custom order details require human discussion"
+    },
+    "attachments": []
+  },
+  "raw_channel_values": {
+    "form_name": "contact_manager",
+    "raw_message": "Хочу поговорити з менеджером"
+  },
+  "metadata": {
+    "example": true,
+    "live_runtime_enabled": false
+  },
+  "received_at": "2026-06-10T00:05:00+00:00"
+}

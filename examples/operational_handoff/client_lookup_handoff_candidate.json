@@ -1,0 +1,9 @@
+{
+  "candidate_id": "handoff_candidate:crm_client_lookup_001",
+  "source_intake_id": "crm_client_lookup_001",
+  "target_owner_module": "forprint_operational_registry",
+  "request_kind": "client_lookup_request",
+  "normalized_summary": "CRM asks Gateway to prepare client lookup handoff candidate.",
+  "is_live_write_enabled": false,
+  "fixture_status": "offline_example_only"
+}

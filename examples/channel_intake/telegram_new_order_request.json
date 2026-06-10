@@ -1,0 +1,34 @@
+{
+  "intake_id": "telegram_new_order_001",
+  "channel_source": "telegram_bot",
+  "source_channel_request_id": "telegram_message_1001",
+  "client_identity_hint": {
+    "external_channel_user_id": "telegram_user_777",
+    "client_ref": null,
+    "contact_hint": {
+      "phone": "+380000000001",
+      "email": null,
+      "username": "example_telegram_user",
+      "display_name": "Example Telegram Client"
+    }
+  },
+  "business_request_payload": {
+    "request_kind": "new_order_request",
+    "summary": "Client wants to order business cards.",
+    "details": {
+      "product_hint": "business cards",
+      "quantity_hint": 500,
+      "deadline_hint": "this week"
+    },
+    "attachments": []
+  },
+  "raw_channel_values": {
+    "raw_text": "Потрібні візитки 500 шт на цей тиждень",
+    "channel": "telegram"
+  },
+  "metadata": {
+    "example": true,
+    "live_runtime_enabled": false
+  },
+  "received_at": "2026-06-10T00:00:00+00:00"
+}

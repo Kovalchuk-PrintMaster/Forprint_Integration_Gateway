@@ -338,6 +338,63 @@ def validate_gateway_boundaries_doc() -> CheckResult:
         details=details,
     )
 
+def validate_v0_3_architecture_docs() -> CheckResult:
+    """Validate v0.3 architecture documentation files."""
+    started_at = time.perf_counter()
+
+    try:
+        required_docs = {
+            PROJECT_ROOT
+            / "docs"
+            / "architecture"
+            / "channel_intake_contracts_v0_3.md": [
+                "Supported channel sources",
+                "Supported request kinds",
+                "No live runtime",
+                "Gateway must not become a business brain",
+            ],
+            PROJECT_ROOT
+            / "docs"
+            / "architecture"
+            / "operational_handoff_contracts_v0_3.md": [
+                "Operational Registry handoff candidates",
+                "is_live_write_enabled",
+                "Gateway does not create",
+                "It must not become the owner of operational truth",
+            ],
+        }
+
+        for path, required_phrases in required_docs.items():
+            if not path.exists():
+                raise FileNotFoundError(
+                    "Missing v0.3 architecture doc: "
+                    + str(path.relative_to(PROJECT_ROOT))
+                )
+
+            content = path.read_text(encoding="utf-8")
+            missing_phrases = [phrase for phrase in required_phrases if phrase not in content]
+
+            if missing_phrases:
+                raise ValueError(
+                    f"{path.name} misses required phrase(s): "
+                    + ", ".join(missing_phrases)
+                )
+
+        status = "OK"
+        details = "v0.3 architecture documentation validation passed"
+
+    except Exception as exc:
+        status = "FAIL"
+        details = str(exc)
+
+    return CheckResult(
+        name="v0.3 architecture docs",
+        expected_result="Channel intake і operational handoff docs валідні",
+        status=status,
+        duration_seconds=time.perf_counter() - started_at,
+        command=None,
+        details=details,
+    )
 
 def build_terminal_table(results: list[CheckResult]) -> Table:
     """Build Rich terminal table."""
@@ -461,10 +518,16 @@ def main() -> int:
 			expected_result="Локальний GatewayProcessor проходить smoke-сценарій",
 			command=[sys.executable, "scripts/run_gateway_smoke.py"],
 		),
+        run_command_check(
+            name="Channel intake preview",
+            expected_result="v0.3 channel intake preview проходить offline-сценарії",
+            command=[sys.executable, "scripts/run_channel_intake_preview.py"],
+        ),
 		validate_examples_and_contract_fixtures(),
 		validate_manifest(),
 		validate_routes(),
 		validate_gateway_boundaries_doc(),
+        validate_v0_3_architecture_docs(),
 	]
 
     for result in results:

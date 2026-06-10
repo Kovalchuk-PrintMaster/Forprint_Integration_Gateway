@@ -1,5 +1,10 @@
 """Services for ForPrint Integration Gateway."""
 
+from forprint_integration_gateway.services.channel_intake import (
+    ChannelIntakeProcessor,
+    load_channel_intake_example,
+    serialize_channel_intake_result,
+)
 from forprint_integration_gateway.services.example_loader import (
     load_contract_fixture,
     load_example_request,
@@ -11,12 +16,15 @@ from forprint_integration_gateway.services.router import RouteNotFoundError, Sim
 from forprint_integration_gateway.services.validator import SimpleValidator
 
 __all__ = [
+    "ChannelIntakeProcessor",
     "GatewayProcessor",
     "InMemoryIdempotencyService",
     "RouteNotFoundError",
     "SimpleRouter",
     "SimpleValidator",
+    "load_channel_intake_example",
     "load_contract_fixture",
     "load_example_request",
     "load_example_response",
+    "serialize_channel_intake_result",
 ]

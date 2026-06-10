@@ -1,7 +1,8 @@
 PYTHON=.venv_gateway/bin/python
 PIP=.venv_gateway/bin/pip
 
-.PHONY: install test lint format check smoke check-report clean
+.PHONY: install test format check smoke check-report clean
+		lint-fix lint channel-intake-preview smoke
 
 install:
 	$(PIP) install --upgrade pip
@@ -13,13 +14,20 @@ test:
 lint:
 	$(PYTHON) -m ruff check app tests scripts
 
+lint-fix:
+	$(PYTHON) -m ruff check --fix
+
 format:
+	$(PYTHON) -m ruff --fix
 	$(PYTHON) -m ruff format app tests scripts
 
-check: lint test
+check: lint-fix lint test
 
 smoke:
 	$(PYTHON) scripts/run_gateway_smoke.py
+
+channel-intake-preview:
+	$(PYTHON) scripts/run_channel_intake_preview.py
 
 check-report:
 	$(PYTHON) scripts/run_gateway_checks.py
@@ -41,7 +49,7 @@ status-report:
 	@printf '{\n' > reports/gateway_module_status.json
 	@printf '  "module_name": "forprint_integration_gateway",\n' >> reports/gateway_module_status.json
 	@printf '  "module_status": "active",\n' >> reports/gateway_module_status.json
-	@printf '  "current_phase": "governance_alignment_v0_1",\n' >> reports/gateway_module_status.json
+	@printf '  "current_phase": "channel_intake_operational_handoff_contracts_v0_3",\n' >> reports/gateway_module_status.json
 	@printf '  "boundary": "validation_normalization_routing_only_no_business_ownership"\n' >> reports/gateway_module_status.json
 	@printf '}\n' >> reports/gateway_module_status.json
 	@echo "📄 Module status report: reports/gateway_module_status.json"

@@ -1,0 +1,41 @@
+{
+  "intake_id": "mobile_app_file_prepress_001",
+  "channel_source": "mobile_app",
+  "source_channel_request_id": "mobile_app_action_4001",
+  "client_identity_hint": {
+    "external_channel_user_id": "mobile_user_future_001",
+    "client_ref": null,
+    "contact_hint": {
+      "phone": "+380000000004",
+      "email": "mobile.future@example.com",
+      "username": null,
+      "display_name": "Future Mobile App Client"
+    }
+  },
+  "business_request_payload": {
+    "request_kind": "file_prepress_request",
+    "summary": "Future Mobile App user submits a file/prepress request.",
+    "details": {
+      "file_ref": "future_mobile_upload_ref_001",
+      "product_hint": "banner",
+      "prepress_hint": "check print readiness"
+    },
+    "attachments": [
+      {
+        "attachment_ref": "future_mobile_upload_ref_001",
+        "filename": "banner_layout.pdf",
+        "mime_type": "application/pdf"
+      }
+    ]
+  },
+  "raw_channel_values": {
+    "runtime_status": "planned_future",
+    "mobile_app_runtime_enabled": false
+  },
+  "metadata": {
+    "example": true,
+    "planned_future_channel": true,
+    "live_runtime_enabled": false
+  },
+  "received_at": "2026-06-10T00:04:00+00:00"
+}

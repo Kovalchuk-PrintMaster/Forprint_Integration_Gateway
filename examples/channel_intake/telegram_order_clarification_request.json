@@ -1,0 +1,33 @@
+{
+  "intake_id": "telegram_order_clarification_001",
+  "channel_source": "telegram_bot",
+  "source_channel_request_id": "telegram_message_1002",
+  "client_identity_hint": {
+    "external_channel_user_id": "telegram_user_777",
+    "client_ref": "client_ref_example_001",
+    "contact_hint": {
+      "phone": "+380000000001",
+      "email": null,
+      "username": "example_telegram_user",
+      "display_name": "Example Telegram Client"
+    }
+  },
+  "business_request_payload": {
+    "request_kind": "order_clarification",
+    "summary": "Client clarifies paper type for an existing request.",
+    "details": {
+      "order_ref_hint": "order_ref_example_001",
+      "clarification": "Client asks whether thicker paper is possible."
+    },
+    "attachments": []
+  },
+  "raw_channel_values": {
+    "raw_text": "А можна папір щільніший?",
+    "channel": "telegram"
+  },
+  "metadata": {
+    "example": true,
+    "live_runtime_enabled": false
+  },
+  "received_at": "2026-06-10T00:01:00+00:00"
+}

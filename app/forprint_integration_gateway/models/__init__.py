@@ -1,12 +1,38 @@
 """Data models for ForPrint Integration Gateway."""
 
+from forprint_integration_gateway.models.channel_intake import (
+    BusinessRequestKind,
+    BusinessRequestPayload,
+    ChannelIntakeEnvelope,
+    ChannelSource,
+    ClientIdentityHint,
+    ContactHint,
+    GatewayCorrelationContext,
+    GatewayIdempotencyPolicy,
+    GatewayRouteDecision,
+    GatewayValidationIssue,
+    NormalizedGatewayRequest,
+    OperationalRegistryHandoffCandidate,
+)
 from forprint_integration_gateway.models.envelope import IntegrationRequest, IntegrationResponse
 from forprint_integration_gateway.models.errors import ValidationError
 from forprint_integration_gateway.models.routing import RoutingRule
 
 __all__ = [
+    "BusinessRequestKind",
+    "BusinessRequestPayload",
+    "ChannelIntakeEnvelope",
+    "ChannelSource",
+    "ClientIdentityHint",
+    "ContactHint",
+    "GatewayCorrelationContext",
+    "GatewayIdempotencyPolicy",
+    "GatewayRouteDecision",
+    "GatewayValidationIssue",
     "IntegrationRequest",
     "IntegrationResponse",
+    "NormalizedGatewayRequest",
+    "OperationalRegistryHandoffCandidate",
     "RoutingRule",
     "ValidationError",
 ]

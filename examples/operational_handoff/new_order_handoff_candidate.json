@@ -1,0 +1,9 @@
+{
+  "candidate_id": "handoff_candidate:telegram_new_order_001",
+  "source_intake_id": "telegram_new_order_001",
+  "target_owner_module": "forprint_operational_registry",
+  "request_kind": "new_order_request",
+  "normalized_summary": "Client wants to order business cards.",
+  "is_live_write_enabled": false,
+  "fixture_status": "offline_example_only"
+}
