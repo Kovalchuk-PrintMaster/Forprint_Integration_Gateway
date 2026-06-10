@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 BLUEPRINT_ROOT = Path("/srv/software_development/forprint-project/forprint_system_blueprint")
 MODULE_ID = "forprint_integration_gateway"
 
