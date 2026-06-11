@@ -27,6 +27,9 @@ COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
 
 V0_3_PROMPT_ID = "gateway_channel_intake_operational_handoff_contracts_v0_3"
 V0_3_1_PROMPT_ID = "gateway_v0_3_1_coordination_records_fix"
+V0_3_1_COMPLETION_REPORT_FILE = (
+    "coordination/reports/gateway_v0_3_1_coordination_records_fix_completion.md"
+)
 
 IMPLEMENTATION_COMMIT = "3b4707a"
 V0_3_FINALIZATION_COMMIT = "4b7821f"
@@ -169,7 +172,27 @@ def refresh_reports_index(updated_at: str, commit: str) -> None:
                     "no_live_integrations_guard": "ok",
                 },
                 "boundary_confirmation": build_boundary_confirmation(),
-            }
+            },
+
+            {
+                "report_id": "gateway_v0_3_1_coordination_records_fix",
+                "phase": f"{PHASE}_coordination_fix",
+                "status": "completed",
+                "implementation_commit": "44ac33a",
+                "prompt_reader_fix_commit": "feca6f3",
+                "report_file": V0_3_1_COMPLETION_REPORT_FILE,
+                "validation_results": {
+                    "governance_check": "ok",
+                    "make_check": "ok",
+                    "make_check_report": "ok",
+                    "channel_intake_preview": "ok",
+                    "coordination_records_check": "ok",
+                    "canonical_module_id_guard": "ok",
+                    "no_live_integrations_guard": "ok",
+                    "reports_index_tracked": "ok",
+                },
+                "boundary_confirmation": build_boundary_confirmation(),
+            },
         ],
     }
     write_yaml(REPORTS_INDEX_PATH, payload)

@@ -1,17 +1,17 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-11T15:02:38.537176+00:00'
+updated_at: '2026-06-11T16:13:12.024431+00:00'
 prompts:
 - prompt_id: gateway_channel_intake_operational_handoff_contracts_v0_3
   source: forprint_system_blueprint
   status: completed_in_module
   implementation_commit: 3b4707a
   finalization_commit: 4b7821f
-  coordination_fix_commit: feca6f3
+  coordination_fix_commit: 44ac33a
   phase: channel_intake_operational_handoff_contracts_v0_3
   completed_step: gateway_channel_intake_contracts_ready
 - prompt_id: gateway_v0_3_1_coordination_records_fix
   source: forprint_system_blueprint
   status: applied_in_module
-  implementation_commit: feca6f3
+  implementation_commit: 44ac33a
   phase: channel_intake_operational_handoff_contracts_v0_3_coordination_fix
   completed_step: gateway_v0_3_coordination_records_machine_clean

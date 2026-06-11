@@ -1,12 +1,12 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-11T15:02:38.537176+00:00'
+updated_at: '2026-06-11T16:13:12.024431+00:00'
 reports:
 - report_id: gateway_channel_intake_contracts_ready
   phase: channel_intake_operational_handoff_contracts_v0_3
   status: completed
   implementation_commit: 3b4707a
   finalization_commit: 4b7821f
-  coordination_fix_commit: feca6f3
+  coordination_fix_commit: 44ac33a
   validation_results:
     governance_check: ok
     make_check: ok
@@ -15,6 +15,36 @@ reports:
     coordination_records_check: ok
     canonical_module_id_guard: ok
     no_live_integrations_guard: ok
+  boundary_confirmation:
+    no_production_api_added: true
+    no_real_external_integrations_added: true
+    no_database_ownership_added: true
+    no_operational_data_ownership_added: true
+    no_queue_redis_s3_dependency_added: true
+    no_telegram_runtime_calls_added: true
+    no_website_runtime_calls_added: true
+    no_crm_runtime_calls_added: true
+    no_operational_registry_runtime_calls_added: true
+    no_1c_writes_added: true
+    no_automatic_posting_added: true
+    no_final_price_calculation_added: true
+    examples_are_offline_fixtures_only: true
+    gateway_remains_validation_routing_boundary: true
+- report_id: gateway_v0_3_1_coordination_records_fix
+  phase: channel_intake_operational_handoff_contracts_v0_3_coordination_fix
+  status: completed
+  implementation_commit: 44ac33a
+  prompt_reader_fix_commit: feca6f3
+  report_file: coordination/reports/gateway_v0_3_1_coordination_records_fix_completion.md
+  validation_results:
+    governance_check: ok
+    make_check: ok
+    make_check_report: ok
+    channel_intake_preview: ok
+    coordination_records_check: ok
+    canonical_module_id_guard: ok
+    no_live_integrations_guard: ok
+    reports_index_tracked: ok
   boundary_confirmation:
     no_production_api_added: true
     no_real_external_integrations_added: true

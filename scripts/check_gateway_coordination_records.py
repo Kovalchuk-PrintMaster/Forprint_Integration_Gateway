@@ -16,6 +16,13 @@ PHASE = "channel_intake_operational_handoff_contracts_v0_3"
 COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
 V0_3_PROMPT_ID = "gateway_channel_intake_operational_handoff_contracts_v0_3"
 IMPLEMENTATION_COMMIT = "3b4707a"
+V0_3_1_REPORT_ID = "gateway_v0_3_1_coordination_records_fix"
+V0_3_1_REPORT_FILE = (
+    PROJECT_ROOT
+    / "coordination"
+    / "reports"
+    / "gateway_v0_3_1_coordination_records_fix_completion.md"
+)
 
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
 PROMPTS_INDEX_PATH = PROJECT_ROOT / "coordination" / "prompts" / "index.yaml"
@@ -223,6 +230,25 @@ def assert_reports_index() -> None:
     for key, value in boundary.items():
         if value is not True:
             raise CoordinationCheckError(f"Boundary confirmation {key} must be true")
+    
+    v0_3_1_reports = [
+    report
+    for report in reports
+    if isinstance(report, dict) and report.get("report_id") == V0_3_1_REPORT_ID
+    ]
+
+    if not v0_3_1_reports:
+        raise CoordinationCheckError(f"Missing report record: {V0_3_1_REPORT_ID}")
+
+    v0_3_1_report = v0_3_1_reports[0]
+
+    if v0_3_1_report.get("status") != "completed":
+        raise CoordinationCheckError(f"Report {V0_3_1_REPORT_ID} must be completed")
+
+    if v0_3_1_report.get("report_file") != str(
+        V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT)
+    ):
+        raise CoordinationCheckError(f"Report {V0_3_1_REPORT_ID} must reference completion file")
 
 
 def assert_reports_index_is_tracked() -> None:
@@ -314,6 +340,7 @@ def main() -> int:
         ("Prompts index", assert_prompts_index),
         ("Reports index", assert_reports_index),
         ("Reports index tracked", assert_reports_index_is_tracked),
+        ("v0.3.1 report tracked", assert_v0_3_1_report_file_is_tracked),
         ("Canonical module id guard", assert_no_forbidden_module_ids),
         ("No live integration flags", assert_no_live_integrations_enabled),
     ]
@@ -327,6 +354,32 @@ def main() -> int:
     print("✅ Gateway coordination records are machine-clean.")
     return 0
 
+def assert_v0_3_1_report_file_is_tracked() -> None:
+    """Ensure v0.3.1 completion report is tracked by Git."""
+    if not V0_3_1_REPORT_FILE.exists():
+        raise CoordinationCheckError(
+            "Missing v0.3.1 completion report: "
+            + str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT))
+        )
+
+    completed = subprocess.run(
+        [
+            "git",
+            "ls-files",
+            "--error-unmatch",
+            str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT)),
+        ],
+        cwd=PROJECT_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    if completed.returncode != 0:
+        raise CoordinationCheckError(
+            "v0.3.1 completion report must be tracked. Use: git add -f "
+            + str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT))
+        )
 
 if __name__ == "__main__":
     try:
