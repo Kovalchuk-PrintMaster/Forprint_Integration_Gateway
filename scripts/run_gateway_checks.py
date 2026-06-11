@@ -523,6 +523,11 @@ def main() -> int:
             expected_result="v0.3 channel intake preview проходить offline-сценарії",
             command=[sys.executable, "scripts/run_channel_intake_preview.py"],
         ),
+        run_command_check(
+            name="Coordination records check",
+            expected_result="v0.3 coordination records machine-clean і tracked",
+            command=[sys.executable, "scripts/check_gateway_coordination_records.py"],
+        ),
 		validate_examples_and_contract_fixtures(),
 		validate_manifest(),
 		validate_routes(),

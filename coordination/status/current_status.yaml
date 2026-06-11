@@ -1,33 +1,27 @@
-module_name: forprint_integration_gateway
-module_status: active
-priority: high
+module_id: forprint_integration_gateway
+last_updated: '2026-06-11T15:02:38.537176+00:00'
+branch: main
+last_commit: feca6f3
 current_phase: channel_intake_operational_handoff_contracts_v0_3
 last_completed_step: gateway_channel_intake_contracts_ready
-last_updated: "{now}"
-branch: {branch}
-last_commit: {commit}
-
 checks:
-  make_check: pending
-  make_check_report: pending
-  governance_check: pending
-
-boundary:
-  no_foreign_ownership: true
-  no_production_api: true
-  no_live_write: true
-  no_real_integrations: true
-
-boundaries:
-  validation_routing_only: true
-  no_business_brain: true
-  no_operational_database_ownership: true
-  no_client_order_accounting_warehouse_ownership: true
-  no_external_runtime_api_enabled: true
-
-validation:
-  make_check: pending
-  make_check_report: pending
-  governance_alignment: pending
-
-recommended_next_step: maintain_gateway_boundary_and_wait_for_next_blueprint_directive
+  make_check: ok
+  make_check_report: ok
+  governance_check: ok
+  channel_intake_preview: ok
+  coordination_records_check: ok
+boundary_confirmation:
+  no_production_api_added: true
+  no_real_external_integrations_added: true
+  no_database_ownership_added: true
+  no_operational_data_ownership_added: true
+  no_queue_redis_s3_dependency_added: true
+  no_telegram_runtime_calls_added: true
+  no_website_runtime_calls_added: true
+  no_crm_runtime_calls_added: true
+  no_operational_registry_runtime_calls_added: true
+  no_1c_writes_added: true
+  no_automatic_posting_added: true
+  no_final_price_calculation_added: true
+  examples_are_offline_fixtures_only: true
+  gateway_remains_validation_routing_boundary: true

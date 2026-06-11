@@ -3,6 +3,7 @@ PIP=.venv_gateway/bin/pip
 
 .PHONY: install test format check smoke check-report clean
 		lint-fix lint channel-intake-preview smoke
+		coordination-records-refresh coordination-records-check
 
 install:
 	$(PIP) install --upgrade pip
@@ -105,3 +106,9 @@ blueprint-prompts-list:
 blueprint-prompt:
 	$(MAKE) blueprint-pull
 	$(PYTHON) scripts/read_blueprint_outgoing_prompt.py
+
+coordination-records-refresh:
+	$(PYTHON) scripts/update_gateway_coordination_records.py
+
+coordination-records-check:
+	$(PYTHON) scripts/check_gateway_coordination_records.py
