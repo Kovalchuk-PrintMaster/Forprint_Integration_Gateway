@@ -1,78 +1,197 @@
+"""Read the active outgoing Blueprint prompt for this module."""
+
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
+
+import yaml
 
 BLUEPRINT_ROOT = Path("/srv/software_development/forprint-project/forprint_system_blueprint")
 MODULE_ID = "forprint_integration_gateway"
+OUTGOING_PROMPTS_DIR = (
+    BLUEPRINT_ROOT / "coordination" / "outgoing_prompts" / MODULE_ID
+)
+INDEX_PATH = OUTGOING_PROMPTS_DIR / "index.yaml"
+READY_STATUS = "ready_for_module_pull"
 
-INDEX_PATH = BLUEPRINT_ROOT / "coordination/outgoing_prompts" / MODULE_ID / "index.yaml"
+SECTION_HEADERS = {
+    "active_prompts:",
+    "completed_prompts:",
+    "review_notes:",
+}
 
 
-def _parse_simple_prompt_index(content: str) -> list[dict[str, str]]:
-    prompts: list[dict[str, str]] = []
-    current: dict[str, str] | None = None
+def load_index(path: Path) -> dict[str, Any]:
+    """Load Blueprint outgoing prompt index.
 
-    for raw_line in content.splitlines():
+    The preferred format is valid YAML.
+
+    A fallback parser is intentionally kept here because Blueprint index files
+    may temporarily contain flat prompt records or non-indented block text while
+    coordination records are being fixed.
+    """
+    text = path.read_text(encoding="utf-8")
+
+    try:
+        loaded = yaml.safe_load(text) or {}
+        if isinstance(loaded, dict):
+            return loaded
+    except yaml.YAMLError:
+        return parse_flat_index_fallback(text)
+
+    return {}
+
+
+def parse_flat_index_fallback(text: str) -> dict[str, Any]:
+    """Parse a temporarily malformed flat Blueprint prompt index.
+
+    This supports the observed shape:
+
+    active_prompts:
+
+    prompt_id: ...
+    status: ready_for_module_pull
+    file: ...
+    target_module: ...
+    phase: ...
+    priority: ...
+
+    completed_prompts:
+
+    note: >
+    Non-indented note text...
+    """
+    index_data: dict[str, Any] = {"active_prompts": []}
+    current_section: str | None = None
+    active_prompt: dict[str, Any] = {}
+
+    for raw_line in text.splitlines():
         line = raw_line.strip()
 
-        if line.startswith("- prompt_id:"):
-            if current:
-                prompts.append(current)
-            current = {"prompt_id": line.split(":", 1)[1].strip().strip('"')}
+        if not line:
+            continue
 
-        elif current is not None and ":" in line:
-            key, value = line.split(":", 1)
-            current[key.strip()] = value.strip().strip('"')
+        if line in SECTION_HEADERS:
+            current_section = line.removesuffix(":")
+            continue
 
-    if current:
-        prompts.append(current)
+        if current_section != "active_prompts":
+            continue
 
-    return prompts
+        if ":" not in line:
+            continue
+
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip().strip('"')
+
+        if key in {
+            "prompt_id",
+            "status",
+            "file",
+            "target_module",
+            "phase",
+            "priority",
+        }:
+            active_prompt[key] = value
+
+    if active_prompt:
+        index_data["active_prompts"].append(active_prompt)
+
+    return index_data
 
 
-def main() -> int:
-    if not INDEX_PATH.exists():
-        print(f"NO OUTGOING PROMPT INDEX: {INDEX_PATH}")
-        return 1
+def normalize_prompt_records(index_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """Normalize supported Blueprint outgoing prompt index shapes."""
+    active_prompts = index_data.get("active_prompts")
 
-    index_content = INDEX_PATH.read_text(encoding="utf-8")
-    prompts = _parse_simple_prompt_index(index_content)
+    if isinstance(active_prompts, list):
+        return [prompt for prompt in active_prompts if isinstance(prompt, dict)]
 
-    ready_prompts = [
-        prompt for prompt in prompts
-        if prompt.get("status") == "ready_for_module_pull"
-    ]
+    if isinstance(active_prompts, dict):
+        return [active_prompts]
 
-    if not ready_prompts:
-        print("NO READY OUTGOING PROMPTS")
-        print(f"Index: {INDEX_PATH}")
-        return 0
+    flat_prompt_keys = {
+        "prompt_id",
+        "status",
+        "file",
+        "target_module",
+        "phase",
+        "priority",
+    }
 
-    prompt = ready_prompts[0]
+    if flat_prompt_keys.intersection(index_data):
+        return [index_data]
+
+    return []
+
+
+def find_ready_prompt(index_data: dict[str, Any]) -> dict[str, Any] | None:
+    """Find the first ready outgoing prompt for the module."""
+    for prompt in normalize_prompt_records(index_data):
+        if prompt.get("status") != READY_STATUS:
+            continue
+
+        if prompt.get("target_module") not in {None, MODULE_ID}:
+            continue
+
+        return prompt
+
+    return None
+
+
+def resolve_prompt_path(prompt: dict[str, Any]) -> Path:
+    """Resolve prompt file path from index record."""
     prompt_file = prompt.get("file")
-
     if not prompt_file:
-        print("READY PROMPT HAS NO FILE FIELD")
-        print(f"Prompt: {prompt}")
-        return 1
+        raise ValueError("Ready prompt record does not contain 'file'")
 
-    prompt_path = INDEX_PATH.parent / prompt_file
+    path = Path(str(prompt_file))
 
-    if not prompt_path.exists():
-        print(f"PROMPT FILE NOT FOUND: {prompt_path}")
-        return 1
+    if path.is_absolute():
+        return path
 
+    return OUTGOING_PROMPTS_DIR / path
+
+
+def print_prompt(prompt: dict[str, Any], prompt_path: Path) -> None:
+    """Print outgoing prompt header and content."""
     print("=" * 80)
     print("FORPRINT BLUEPRINT OUTGOING PROMPT")
     print("=" * 80)
     print(f"module: {MODULE_ID}")
-    print(f"prompt_id: {prompt.get('prompt_id', '-')}")
-    print(f"status: {prompt.get('status', '-')}")
+    print(f"prompt_id: {prompt.get('prompt_id')}")
+    print(f"status: {prompt.get('status')}")
     print(f"file: {prompt_path}")
     print("=" * 80)
     print()
     print(prompt_path.read_text(encoding="utf-8"))
 
+
+def main() -> int:
+    """Read and print the active ready outgoing prompt."""
+    if not INDEX_PATH.exists():
+        print("NO OUTGOING PROMPT INDEX")
+        print(f"Index: {INDEX_PATH}")
+        return 1
+
+    index_data = load_index(INDEX_PATH)
+    prompt = find_ready_prompt(index_data)
+
+    if prompt is None:
+        print("NO READY OUTGOING PROMPTS")
+        print(f"Index: {INDEX_PATH}")
+        return 1
+
+    prompt_path = resolve_prompt_path(prompt)
+
+    if not prompt_path.exists():
+        print("READY PROMPT FILE NOT FOUND")
+        print(f"Prompt file: {prompt_path}")
+        return 1
+
+    print_prompt(prompt, prompt_path)
     return 0
 
 
