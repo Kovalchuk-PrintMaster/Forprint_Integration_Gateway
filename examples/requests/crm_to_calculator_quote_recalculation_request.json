@@ -4,7 +4,7 @@
   "idempotency_key": "example_idem_crm_quote_recalculation_001",
   "source_module": "forprint_crm",
   "source_channel": "crm",
-  "target_module": "forprint_calculator_engine",
+  "target_module": "calculator_engine",
   "contract_id": "calculator.quote_request.v1",
   "contract_version": "v1",
   "operation": "quote.recalculation.requested",

@@ -10,7 +10,7 @@ def make_request(
     *,
     request_id: str = "req_001",
     idempotency_key: str = "idem_001",
-    target_module: str = "forprint_calculator_engine",
+    target_module: str = "calculator_engine",
     contract_id: str = "calculator.quote_request.v1",
     operation: str = "quote.preview.requested",
 ) -> IntegrationRequest:
@@ -33,7 +33,7 @@ def make_processor_with_quote_route() -> GatewayProcessor:
     route = RoutingRule(
         route_id="customer_channel_to_calculator_quote_preview",
         source_module="customer_channel",
-        target_module="forprint_calculator_engine",
+        target_module="calculator_engine",
         contract_id="calculator.quote_request.v1",
         operation="quote.preview.requested",
         enabled=True,
@@ -55,7 +55,7 @@ def test_gateway_processor_routes_valid_request() -> None:
     assert response.status == "routed"
     assert response.request_id == "req_001"
     assert response.correlation_id == "corr_001"
-    assert response.target_module == "forprint_calculator_engine"
+    assert response.target_module == "calculator_engine"
     assert response.result_payload["route_id"] == "customer_channel_to_calculator_quote_preview"
     assert response.metadata["gateway_stage"] == "routing"
     assert response.metadata["idempotency"]["is_duplicate"] is False
@@ -70,7 +70,7 @@ def test_gateway_processor_returns_validation_failed_response() -> None:
         # idempotency_key is intentionally missing.
         "source_module": "customer_channel",
         "source_channel": "website",
-        "target_module": "forprint_calculator_engine",
+        "target_module": "calculator_engine",
         "contract_id": "calculator.quote_request.v1",
         "contract_version": "v1",
         "operation": "quote.preview.requested",

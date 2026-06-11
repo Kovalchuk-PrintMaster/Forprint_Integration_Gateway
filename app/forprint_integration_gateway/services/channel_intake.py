@@ -180,7 +180,7 @@ class ChannelIntakeProcessor:
             ),
             BusinessRequestKind.PRICE_ESTIMATE_REQUEST.value: (
                 "channel_intake_to_calculator_quote_preview",
-                "forprint_calculator_engine",
+                "calculator_engine",
                 "quote.preview.requested",
                 "Price estimate requests may be routed to Calculator Engine.",
             ),

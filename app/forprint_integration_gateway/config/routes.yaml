@@ -1,7 +1,7 @@
 routes:
   - route_id: crm_to_calculator_quote_recalculation
     source_module: forprint_crm
-    target_module: forprint_calculator_engine
+    target_module: calculator_engine
     contract_id: calculator.quote_request.v1
     operation: quote.recalculation.requested
     enabled: true
@@ -33,14 +33,14 @@ routes:
 
   - route_id: customer_channel_to_calculator_quote_preview
     source_module: customer_channel
-    target_module: forprint_calculator_engine
+    target_module: calculator_engine
     contract_id: calculator.quote_request.v1
     operation: quote.preview.requested
     enabled: true
     priority: 100
 
   - route_id: calculator_to_crm_quote_result
-    source_module: forprint_calculator_engine
+    source_module: calculator_engine
     target_module: forprint_crm
     contract_id: calculator.quote_response.v1
     operation: quote.preview.completed

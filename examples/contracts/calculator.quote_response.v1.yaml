@@ -1,6 +1,6 @@
 contract_id: calculator.quote_response.v1
 version: v1
-producer: forprint_calculator_engine
+producer: calculator_engine
 consumer: forprint_crm
 operation: quote.preview.completed
 description: >

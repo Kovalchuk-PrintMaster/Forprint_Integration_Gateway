@@ -1,7 +1,7 @@
 contract_id: calculator.quote_request.v1
 version: v1
 producer: forprint_crm_or_customer_channel
-consumer: forprint_calculator_engine
+consumer: calculator_engine
 operation: quote.preview.requested
 related_operations:
   - quote.recalculation.requested

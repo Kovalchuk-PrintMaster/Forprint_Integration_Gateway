@@ -18,7 +18,7 @@ def make_quote_preview_request() -> IntegrationRequest:
         idempotency_key="idem_001",
         source_module="customer_channel",
         source_channel="website",
-        target_module="forprint_calculator_engine",
+        target_module="calculator_engine",
         contract_id="calculator.quote_request.v1",
         contract_version="v1",
         operation="quote.preview.requested",
@@ -31,7 +31,7 @@ def test_router_can_match_simple_placeholder_route() -> None:
     route = RoutingRule(
         route_id="customer_channel_to_calculator_quote_preview",
         source_module="customer_channel",
-        target_module="forprint_calculator_engine",
+        target_module="calculator_engine",
         contract_id="calculator.quote_request.v1",
         operation="quote.preview.requested",
         enabled=True,
@@ -56,7 +56,7 @@ def test_router_ignores_disabled_route() -> None:
     route = RoutingRule(
         route_id="disabled_route",
         source_module="customer_channel",
-        target_module="forprint_calculator_engine",
+        target_module="calculator_engine",
         contract_id="calculator.quote_request.v1",
         operation="quote.preview.requested",
         enabled=False,
@@ -73,7 +73,7 @@ def test_router_prefers_higher_priority_matching_route() -> None:
     low_priority_route = RoutingRule(
         route_id="low_priority_route",
         source_module="customer_channel",
-        target_module="forprint_calculator_engine",
+        target_module="calculator_engine",
         contract_id="calculator.quote_request.v1",
         operation="quote.preview.requested",
         enabled=True,
@@ -83,7 +83,7 @@ def test_router_prefers_higher_priority_matching_route() -> None:
     high_priority_route = RoutingRule(
         route_id="high_priority_route",
         source_module="customer_channel",
-        target_module="forprint_calculator_engine",
+        target_module="calculator_engine",
         contract_id="calculator.quote_request.v1",
         operation="quote.preview.requested",
         enabled=True,

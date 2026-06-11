@@ -4,7 +4,7 @@
   "idempotency_key": "example_idem_customer_channel_quote_preview_001",
   "source_module": "customer_channel",
   "source_channel": "customer_channel",
-  "target_module": "forprint_calculator_engine",
+  "target_module": "calculator_engine",
   "contract_id": "calculator.quote_request.v1",
   "contract_version": "v1",
   "operation": "quote.preview.requested",
