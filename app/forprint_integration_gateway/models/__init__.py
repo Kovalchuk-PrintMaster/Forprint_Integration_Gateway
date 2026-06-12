@@ -29,6 +29,22 @@ from forprint_integration_gateway.models.channel_intake import (
     NormalizedGatewayRequest,
     OperationalRegistryHandoffCandidate,
 )
+from forprint_integration_gateway.models.contract_compatibility import (
+    GatewayAdapterReadinessScore,
+    GatewayBoundaryViolation,
+    GatewayCompatibilityMatrix,
+    GatewayCompatibilityState,
+    GatewayContractCompatibilityResult,
+    GatewayContractCompatibilityRule,
+    GatewayContractVersion,
+    GatewayDryRunDeliveryPlan,
+    GatewayDryRunDeliveryStep,
+    GatewayGoldenPathFixture,
+    GatewayReplayExpectedResult,
+    GatewayReplayFixture,
+    GatewayReplayFixtureType,
+    GatewayReplayResult,
+)
 from forprint_integration_gateway.models.envelope import IntegrationRequest, IntegrationResponse
 from forprint_integration_gateway.models.errors import ValidationError
 from forprint_integration_gateway.models.routing import RoutingRule
@@ -63,4 +79,18 @@ __all__ = [
     "GatewayErrorSeverity",
     "GatewayRetryDecision",
     "GatewayRetryPolicy",
+    "GatewayAdapterReadinessScore",
+    "GatewayBoundaryViolation",
+    "GatewayCompatibilityMatrix",
+    "GatewayCompatibilityState",
+    "GatewayContractCompatibilityResult",
+    "GatewayContractCompatibilityRule",
+    "GatewayContractVersion",
+    "GatewayDryRunDeliveryPlan",
+    "GatewayDryRunDeliveryStep",
+    "GatewayGoldenPathFixture",
+    "GatewayReplayExpectedResult",
+    "GatewayReplayFixture",
+    "GatewayReplayFixtureType",
+    "GatewayReplayResult",
 ]

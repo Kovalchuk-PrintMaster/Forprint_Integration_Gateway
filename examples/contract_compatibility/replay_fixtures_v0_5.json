@@ -1,0 +1,166 @@
+{
+  "fixture_set_id": "gateway_replay_fixtures_v0_5",
+  "contract_version": "v0.5",
+  "fixtures": [
+    {
+      "fixture_id": "golden_telegram_new_order_to_crm",
+      "fixture_type": "golden",
+      "source_flow": "telegram_bot.new_order_request",
+      "target_contract": "forprint_crm.order_intake",
+      "operation": "order.intake.submitted",
+      "contract_version": "v0.5",
+      "expected_result": "pass",
+      "expected_state": "compatible",
+      "expected_owner_module": "forprint_crm",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "golden_telegram_new_order_to_operational_registry",
+      "fixture_type": "golden",
+      "source_flow": "telegram_bot.new_order_request",
+      "target_contract": "forprint_operational_registry.order_handoff_candidate",
+      "operation": "order.handoff.candidate",
+      "contract_version": "v0.5",
+      "expected_result": "pass",
+      "expected_state": "compatible_dry_run_only",
+      "expected_owner_module": "forprint_operational_registry",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "golden_website_price_estimate_to_calculator",
+      "fixture_type": "golden",
+      "source_flow": "website.price_estimate_request",
+      "target_contract": "calculator_engine.quote_preview",
+      "operation": "quote.preview.requested",
+      "contract_version": "v0.5",
+      "expected_result": "pass",
+      "expected_state": "compatible_dry_run_only",
+      "expected_owner_module": "calculator_engine",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "golden_crm_client_lookup_to_operational_registry",
+      "fixture_type": "golden",
+      "source_flow": "forprint_crm.client_lookup_request",
+      "target_contract": "forprint_operational_registry.client_lookup_candidate",
+      "operation": "client.lookup.requested",
+      "contract_version": "v0.5",
+      "expected_result": "pass",
+      "expected_state": "compatible",
+      "expected_owner_module": "forprint_operational_registry",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "golden_mobile_prepress_to_prepress_planned_future",
+      "fixture_type": "golden",
+      "source_flow": "mobile_app.file_prepress_request",
+      "target_contract": "forprint_prepress_hub.prepress_job_candidate",
+      "operation": "prepress.job.requested",
+      "contract_version": "v0.5",
+      "expected_result": "pass",
+      "expected_state": "planned_future",
+      "expected_owner_module": "forprint_prepress_hub",
+      "runtime_status": "planned",
+      "delivery_mode": "future_live_adapter",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "negative_missing_client_identity",
+      "fixture_type": "negative",
+      "source_flow": "telegram_bot.new_order_request",
+      "target_contract": "forprint_crm.order_intake",
+      "operation": "order.intake.submitted",
+      "contract_version": "v0.5",
+      "expected_result": "blocked",
+      "expected_state": "missing_required_field",
+      "expected_owner_module": "forprint_crm",
+      "missing_required_field": true,
+      "payload": {
+        "client_identity_present": false
+      }
+    },
+    {
+      "fixture_id": "negative_unsupported_target_module",
+      "fixture_type": "negative",
+      "source_flow": "website.price_estimate_request",
+      "target_contract": "unknown_module.unsupported_operation",
+      "operation": "unsupported.operation",
+      "contract_version": "v0.5",
+      "expected_result": "blocked",
+      "expected_state": "unsupported_target_module",
+      "expected_owner_module": "unknown_module",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "negative_live_delivery_requested",
+      "fixture_type": "negative",
+      "source_flow": "telegram_bot.new_order_request",
+      "target_contract": "forprint_crm.order_intake",
+      "operation": "order.intake.submitted",
+      "contract_version": "v0.5",
+      "expected_result": "blocked",
+      "expected_state": "forbidden_live_delivery",
+      "expected_owner_module": "forprint_crm",
+      "requested_live_delivery": true,
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "negative_wrong_contract_version",
+      "fixture_type": "negative",
+      "source_flow": "website.price_estimate_request",
+      "target_contract": "calculator_engine.quote_preview",
+      "operation": "quote.preview.requested",
+      "contract_version": "v0.4",
+      "expected_result": "blocked",
+      "expected_state": "incompatible_contract_version",
+      "expected_owner_module": "calculator_engine",
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "negative_accounting_posting_attempt",
+      "fixture_type": "negative",
+      "source_flow": "telegram_bot.new_order_request",
+      "target_contract": "forprint_accounting_registry_service.accounting_reference_candidate",
+      "operation": "accounting.automatic_posting",
+      "contract_version": "v0.5",
+      "expected_result": "blocked",
+      "expected_state": "blocked_by_policy",
+      "expected_owner_module": "forprint_accounting_registry_service",
+      "attempts_automatic_posting": true,
+      "payload": {
+        "client_identity_present": true
+      }
+    },
+    {
+      "fixture_id": "negative_one_c_write_attempt",
+      "fixture_type": "negative",
+      "source_flow": "telegram_bot.new_order_request",
+      "target_contract": "forprint_accounting_registry_service.accounting_reference_candidate",
+      "operation": "accounting.one_c_write",
+      "contract_version": "v0.5",
+      "expected_result": "blocked",
+      "expected_state": "blocked_by_policy",
+      "expected_owner_module": "forprint_accounting_registry_service",
+      "attempts_one_c_write": true,
+      "payload": {
+        "client_identity_present": true
+      }
+    }
+  ]
+}

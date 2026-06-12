@@ -1,0 +1,33 @@
+# Gateway v0.5 Contract Compatibility Matrix
+
+Gateway v0.5 adds an offline contract compatibility matrix.
+
+The matrix describes whether a source flow can be dry-run planned against a target module contract.
+
+It does not enable live delivery.
+
+## Required source flows
+
+telegram_bot.new_order_request
+website.price_estimate_request
+forprint_crm.client_lookup_request
+mobile_app.file_prepress_request
+Required target contracts
+forprint_crm.order_intake
+forprint_operational_registry.client_lookup_candidate
+forprint_operational_registry.order_handoff_candidate
+calculator_engine.quote_preview
+forprint_prepress_hub.prepress_job_candidate
+forprint_accounting_registry_service.accounting_reference_candidate
+Compatibility states
+compatible
+compatible_dry_run_only
+planned_future
+blocked_by_policy
+blocked_by_boundary
+incompatible_contract_version
+missing_required_field
+unsupported_target_module
+forbidden_live_delivery
+
+All matrix rules are offline descriptors only.

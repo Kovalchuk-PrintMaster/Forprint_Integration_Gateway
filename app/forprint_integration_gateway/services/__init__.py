@@ -11,6 +11,14 @@ from forprint_integration_gateway.services.channel_intake import (
     load_channel_intake_example,
     serialize_channel_intake_result,
 )
+from forprint_integration_gateway.services.contract_compatibility import (
+    build_dry_run_delivery_plan,
+    load_compatibility_matrix,
+    load_replay_fixtures,
+    replay_all_fixtures,
+    replay_fixture,
+    validate_all_contract_compatibility,
+)
 from forprint_integration_gateway.services.example_loader import (
     load_contract_fixture,
     load_example_request,
@@ -37,4 +45,10 @@ __all__ = [
     "load_adapter_contracts",
     "validate_adapter_contract",
     "validate_all_adapter_contracts",
+    "build_dry_run_delivery_plan",
+    "load_compatibility_matrix",
+    "load_replay_fixtures",
+    "replay_all_fixtures",
+    "replay_fixture",
+    "validate_all_contract_compatibility",
 ]

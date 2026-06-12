@@ -540,6 +540,24 @@ def main() -> int:
             expected_result="v0.4 adapter readiness preview проходить offline-сценарії",
             command=[sys.executable, "scripts/run_adapter_readiness_preview.py"],
         ),
+        run_command_check(
+        name="Contract compatibility check",
+        expected_result=(
+            "v0.5 compatibility matrix, replay fixtures "
+            "і dry-run planner валідні"
+        ),
+        command=[sys.executable, "scripts/check_gateway_contract_compatibility.py"],
+        ),
+        run_command_check(
+            name="Compatibility matrix preview",
+            expected_result="v0.5 compatibility matrix preview проходить",
+            command=[sys.executable, "scripts/run_compatibility_matrix_preview.py"],
+        ),
+        run_command_check(
+            name="Replay fixtures preview",
+            expected_result="v0.5 replay fixtures preview проходить",
+            command=[sys.executable, "scripts/run_replay_fixtures_preview.py"],
+        ),
 		validate_examples_and_contract_fixtures(),
 		validate_manifest(),
 		validate_routes(),

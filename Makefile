@@ -122,3 +122,15 @@ adapter-contracts-check:
 .PHONY: adapter-readiness-preview
 adapter-readiness-preview:
 	$(PYTHON) scripts/run_adapter_readiness_preview.py
+
+.PHONY:contract-compatibility-check
+contract-compatibility-check:
+	$(PYTHON) scripts/check_gateway_contract_compatibility.py
+
+.PHONY:compatibility-matrix-preview
+compatibility-matrix-preview:
+	$(PYTHON) scripts/run_compatibility_matrix_preview.py
+
+.PHONY: replay-fixtures-preview
+replay-fixtures-preview:
+	$(PYTHON) scripts/run_replay_fixtures_preview.py
