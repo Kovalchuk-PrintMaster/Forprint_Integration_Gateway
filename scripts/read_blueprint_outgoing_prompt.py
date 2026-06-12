@@ -176,8 +176,23 @@ def main() -> int:
         print(f"Index: {INDEX_PATH}")
         return 1
 
-    index_data = load_index(INDEX_PATH)
+    raw_index_text = INDEX_PATH.read_text(encoding="utf-8")
+
+    try:
+        loaded = yaml.safe_load(raw_index_text) or {}
+        index_data = loaded if isinstance(loaded, dict) else {}
+    except yaml.YAMLError:
+        index_data = parse_flat_index_fallback(raw_index_text)
+
     prompt = find_ready_prompt(index_data)
+
+    if prompt is None:
+        # Some Blueprint prompt indexes are syntactically valid YAML but use
+        # duplicate flat top-level keys. In that case PyYAML keeps the last
+        # duplicate key and loses the active prompt. The raw-text fallback keeps
+        # the active_prompts section boundaries and finds the intended prompt.
+        fallback_index_data = parse_flat_index_fallback(raw_index_text)
+        prompt = find_ready_prompt(fallback_index_data)
 
     if prompt is None:
         print("NO READY OUTGOING PROMPTS")
