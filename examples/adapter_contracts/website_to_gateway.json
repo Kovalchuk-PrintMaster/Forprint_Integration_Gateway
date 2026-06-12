@@ -1,0 +1,27 @@
+{
+  "adapter_id": "website_to_gateway",
+  "adapter_name": "Website to Gateway intake adapter",
+  "direction": "inbound_channel_to_gateway",
+  "source_module": "website",
+  "target_module": "forprint_integration_gateway",
+  "delivery_mode": "offline_fixture_only",
+  "runtime_status": "contract_ready",
+  "live_enabled": false,
+  "retry_policy": "manual_review",
+  "contract_version": "v0.4",
+  "compatibility": {
+    "min_supported_version": "v0.4",
+    "max_supported_version": "v0.4",
+    "compatible": true
+  },
+  "restrictions": {
+    "queue_worker_enabled": false,
+    "external_runtime_calls_enabled": false,
+    "automatic_posting_allowed": false,
+    "one_c_write_allowed": false
+  },
+  "metadata": {
+    "example_only": true,
+    "allowed_payload_family": "channel_intake"
+  }
+}

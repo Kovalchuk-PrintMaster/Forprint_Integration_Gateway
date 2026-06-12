@@ -107,8 +107,18 @@ blueprint-prompt:
 	$(MAKE) blueprint-pull
 	$(PYTHON) scripts/read_blueprint_outgoing_prompt.py
 
+.PHONY: coordination-records-refresh
 coordination-records-refresh:
 	$(PYTHON) scripts/update_gateway_coordination_records.py
 
+.PHONY: coordination-records-check
 coordination-records-check:
 	$(PYTHON) scripts/check_gateway_coordination_records.py
+
+.PHONY: adapter-contracts-check
+adapter-contracts-check:
+	$(PYTHON) scripts/check_gateway_adapter_contracts.py
+
+.PHONY: adapter-readiness-preview
+adapter-readiness-preview:
+	$(PYTHON) scripts/run_adapter_readiness_preview.py

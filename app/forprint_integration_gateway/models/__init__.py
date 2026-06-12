@@ -1,5 +1,20 @@
 """Data models for ForPrint Integration Gateway."""
 
+from forprint_integration_gateway.models.adapter_contracts import (
+    AdapterDeliveryMode,
+    AdapterDirection,
+    AdapterRuntimeStatus,
+    GatewayAdapterContract,
+    GatewayAdapterReadiness,
+    GatewayContractCompatibility,
+    GatewayDeliveryAttempt,
+    GatewayDeliveryPlan,
+    GatewayErrorCategory,
+    GatewayErrorCode,
+    GatewayErrorSeverity,
+    GatewayRetryDecision,
+    GatewayRetryPolicy,
+)
 from forprint_integration_gateway.models.channel_intake import (
     BusinessRequestKind,
     BusinessRequestPayload,
@@ -35,4 +50,17 @@ __all__ = [
     "OperationalRegistryHandoffCandidate",
     "RoutingRule",
     "ValidationError",
+    "AdapterDeliveryMode",
+    "AdapterDirection",
+    "AdapterRuntimeStatus",
+    "GatewayAdapterContract",
+    "GatewayAdapterReadiness",
+    "GatewayContractCompatibility",
+    "GatewayDeliveryAttempt",
+    "GatewayDeliveryPlan",
+    "GatewayErrorCategory",
+    "GatewayErrorCode",
+    "GatewayErrorSeverity",
+    "GatewayRetryDecision",
+    "GatewayRetryPolicy",
 ]

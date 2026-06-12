@@ -1,0 +1,27 @@
+{
+  "adapter_id": "mobile_app_to_gateway",
+  "adapter_name": "Future Mobile App to Gateway intake adapter",
+  "direction": "inbound_channel_to_gateway",
+  "source_module": "mobile_app",
+  "target_module": "forprint_integration_gateway",
+  "delivery_mode": "future_live_adapter",
+  "runtime_status": "planned",
+  "live_enabled": false,
+  "retry_policy": "blocked_until_blueprint_approval",
+  "contract_version": "v0.4",
+  "compatibility": {
+    "min_supported_version": "v0.4",
+    "max_supported_version": "v0.4",
+    "compatible": true
+  },
+  "restrictions": {
+    "queue_worker_enabled": false,
+    "external_runtime_calls_enabled": false,
+    "automatic_posting_allowed": false,
+    "one_c_write_allowed": false
+  },
+  "metadata": {
+    "example_only": true,
+    "planned_future_channel": true
+  }
+}

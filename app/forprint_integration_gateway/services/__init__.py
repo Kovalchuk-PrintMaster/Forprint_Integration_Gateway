@@ -1,5 +1,11 @@
 """Services for ForPrint Integration Gateway."""
 
+from forprint_integration_gateway.services.adapter_contracts import (
+    AdapterContractValidationError,
+    load_adapter_contracts,
+    validate_adapter_contract,
+    validate_all_adapter_contracts,
+)
 from forprint_integration_gateway.services.channel_intake import (
     ChannelIntakeProcessor,
     load_channel_intake_example,
@@ -27,4 +33,8 @@ __all__ = [
     "load_example_request",
     "load_example_response",
     "serialize_channel_intake_result",
+    "AdapterContractValidationError",
+    "load_adapter_contracts",
+    "validate_adapter_contract",
+    "validate_all_adapter_contracts",
 ]

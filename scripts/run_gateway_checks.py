@@ -528,6 +528,18 @@ def main() -> int:
             expected_result="v0.3 coordination records machine-clean і tracked",
             command=[sys.executable, "scripts/check_gateway_coordination_records.py"],
         ),
+        run_command_check(
+            name="Adapter contracts check",
+            expected_result=
+                "v0.4 adapter descriptors, error taxonomy " 
+                "і offline retry policies валідні",
+            command=[sys.executable, "scripts/check_gateway_adapter_contracts.py"],
+        ),
+        run_command_check(
+            name="Adapter readiness preview",
+            expected_result="v0.4 adapter readiness preview проходить offline-сценарії",
+            command=[sys.executable, "scripts/run_adapter_readiness_preview.py"],
+        ),
 		validate_examples_and_contract_fixtures(),
 		validate_manifest(),
 		validate_routes(),

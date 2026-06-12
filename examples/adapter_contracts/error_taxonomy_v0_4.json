@@ -1,0 +1,115 @@
+{
+  "taxonomy_id": "gateway_error_taxonomy_v0_4",
+  "errors": [
+    {
+      "code": "gateway.validation.invalid_payload",
+      "category": "validation",
+      "severity": "error",
+      "retryable": false,
+      "message": "Payload failed Gateway validation.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    },
+    {
+      "code": "gateway.routing.no_route",
+      "category": "routing",
+      "severity": "error",
+      "retryable": false,
+      "message": "No offline route descriptor exists for the request.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    },
+    {
+      "code": "gateway.idempotency.conflict",
+      "category": "idempotency",
+      "severity": "error",
+      "retryable": false,
+      "message": "Idempotency key conflicts with an existing request.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    },
+    {
+      "code": "gateway.correlation.missing_context",
+      "category": "correlation",
+      "severity": "error",
+      "retryable": false,
+      "message": "Correlation context is missing or incomplete.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    },
+    {
+      "code": "gateway.adapter.unavailable",
+      "category": "adapter_availability",
+      "severity": "warning",
+      "retryable": true,
+      "message": "Runtime adapter is unavailable or not implemented.",
+      "metadata": {
+        "retry_policy": "retry_when_runtime_adapter_exists"
+      }
+    },
+    {
+      "code": "gateway.delivery.live_forbidden",
+      "category": "forbidden_live_delivery",
+      "severity": "critical",
+      "retryable": false,
+      "message": "Live delivery is forbidden for this adapter contract.",
+      "metadata": {
+        "requires_blueprint_approval": true
+      }
+    },
+    {
+      "code": "gateway.module.unsupported",
+      "category": "unsupported_module",
+      "severity": "error",
+      "retryable": false,
+      "message": "Target or source module is not supported by Gateway contract policy.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    },
+    {
+      "code": "gateway.boundary.violation",
+      "category": "boundary_violation",
+      "severity": "critical",
+      "retryable": false,
+      "message": "Requested action would violate Gateway ownership boundaries.",
+      "metadata": {
+        "requires_blueprint_review": true
+      }
+    },
+    {
+      "code": "gateway.runtime.external_disabled",
+      "category": "external_runtime_disabled",
+      "severity": "warning",
+      "retryable": false,
+      "message": "External runtime integration is disabled by design.",
+      "metadata": {
+        "offline_only": true
+      }
+    },
+    {
+      "code": "gateway.envelope.malformed",
+      "category": "malformed_envelope",
+      "severity": "error",
+      "retryable": false,
+      "message": "Envelope is malformed and cannot be normalized.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    },
+    {
+      "code": "gateway.contract.incompatible_version",
+      "category": "incompatible_contract_version",
+      "severity": "error",
+      "retryable": false,
+      "message": "Contract version is incompatible with Gateway v0.4 descriptors.",
+      "metadata": {
+        "safe_for_operator": true
+      }
+    }
+  ]
+}

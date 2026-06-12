@@ -1,0 +1,29 @@
+{
+  "adapter_id": "gateway_to_accounting_registry",
+  "adapter_name": "Gateway to Accounting Registry descriptor",
+  "direction": "gateway_to_business_module",
+  "source_module": "forprint_integration_gateway",
+  "target_module": "forprint_accounting_registry_service",
+  "delivery_mode": "offline_fixture_only",
+  "runtime_status": "blocked",
+  "live_enabled": false,
+  "retry_policy": "blocked_until_blueprint_approval",
+  "contract_version": "v0.4",
+  "compatibility": {
+    "min_supported_version": "v0.4",
+    "max_supported_version": "v0.4",
+    "compatible": true
+  },
+  "restrictions": {
+    "queue_worker_enabled": false,
+    "external_runtime_calls_enabled": false,
+    "automatic_posting_allowed": false,
+    "one_c_write_allowed": false
+  },
+  "metadata": {
+    "example_only": true,
+    "automatic_posting_allowed": false,
+    "one_c_write_allowed": false,
+    "reason": "Accounting Registry adapter remains blocked from live posting and 1C writes."
+  }
+}

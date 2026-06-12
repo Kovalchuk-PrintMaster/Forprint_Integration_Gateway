@@ -1,0 +1,28 @@
+{
+  "adapter_id": "gateway_to_calculator_engine",
+  "adapter_name": "Gateway to Calculator Engine quote preview descriptor",
+  "direction": "gateway_to_business_module",
+  "source_module": "forprint_integration_gateway",
+  "target_module": "calculator_engine",
+  "delivery_mode": "offline_fixture_only",
+  "runtime_status": "contract_ready",
+  "live_enabled": false,
+  "retry_policy": "manual_review",
+  "contract_version": "v0.4",
+  "compatibility": {
+    "min_supported_version": "v0.4",
+    "max_supported_version": "v0.4",
+    "compatible": true
+  },
+  "restrictions": {
+    "queue_worker_enabled": false,
+    "external_runtime_calls_enabled": false,
+    "automatic_posting_allowed": false,
+    "one_c_write_allowed": false
+  },
+  "metadata": {
+    "example_only": true,
+    "operation_family": "quote_preview_only",
+    "final_price_calculation_allowed": false
+  }
+}
