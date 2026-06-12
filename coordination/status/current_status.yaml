@@ -1,14 +1,16 @@
 module_id: forprint_integration_gateway
-last_updated: '2026-06-11T16:13:12.024431+00:00'
+last_updated: '2026-06-12T13:08:11.756186+00:00'
 branch: main
-last_commit: 44ac33a
-current_phase: channel_intake_operational_handoff_contracts_v0_3
-last_completed_step: gateway_channel_intake_contracts_ready
+last_commit: 3a97012
+current_phase: adapter_contracts_error_taxonomy_v0_4
+last_completed_step: gateway_adapter_contracts_ready
 checks:
   make_check: ok
   make_check_report: ok
   governance_check: ok
   channel_intake_preview: ok
+  adapter_contracts_check: ok
+  adapter_readiness_preview: ok
   coordination_records_check: ok
 boundary_confirmation:
   no_production_api_added: true
@@ -20,6 +22,10 @@ boundary_confirmation:
   no_website_runtime_calls_added: true
   no_crm_runtime_calls_added: true
   no_operational_registry_runtime_calls_added: true
+  no_calculator_runtime_calls_added: true
+  no_library_runtime_calls_added: true
+  no_prepress_runtime_calls_added: true
+  no_accounting_runtime_calls_added: true
   no_1c_writes_added: true
   no_automatic_posting_added: true
   no_final_price_calculation_added: true

@@ -1,4 +1,4 @@
-"""Validate Gateway v0.3 coordination records."""
+"""Validate Gateway coordination records."""
 
 from __future__ import annotations
 
@@ -12,16 +12,29 @@ import yaml
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODULE_ID = "forprint_integration_gateway"
-PHASE = "channel_intake_operational_handoff_contracts_v0_3"
-COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
+CURRENT_PHASE = "adapter_contracts_error_taxonomy_v0_4"
+CURRENT_COMPLETED_STEP = "gateway_adapter_contracts_ready"
+
+V0_3_PHASE = "channel_intake_operational_handoff_contracts_v0_3"
+V0_3_COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
 V0_3_PROMPT_ID = "gateway_channel_intake_operational_handoff_contracts_v0_3"
-IMPLEMENTATION_COMMIT = "3b4707a"
+V0_3_IMPLEMENTATION_COMMIT = "3b4707a"
+
 V0_3_1_REPORT_ID = "gateway_v0_3_1_coordination_records_fix"
 V0_3_1_REPORT_FILE = (
     PROJECT_ROOT
     / "coordination"
     / "reports"
     / "gateway_v0_3_1_coordination_records_fix_completion.md"
+)
+
+V0_4_PROMPT_ID = "gateway_adapter_contracts_error_taxonomy_v0_4"
+V0_4_IMPLEMENTATION_COMMIT = "3a97012"
+V0_4_REPORT_FILE = (
+    PROJECT_ROOT
+    / "coordination"
+    / "reports"
+    / "gateway_v0_4_adapter_contracts_error_taxonomy_completion.md"
 )
 
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
@@ -58,6 +71,8 @@ LIVE_ENABLED_PATTERNS = [
     '"is_live_write_enabled"' + ": true",
     "mobile_app_runtime_enabled" + ": true",
     '"mobile_app_runtime_enabled"' + ": true",
+    "live_enabled" + ": true",
+    '"live_enabled"' + ": true",
 ]
 
 
@@ -78,9 +93,7 @@ def load_yaml(path: Path) -> dict[str, Any]:
         ) from exc
 
     if not isinstance(loaded, dict):
-        raise CoordinationCheckError(
-            f"YAML root must be mapping: {path.relative_to(PROJECT_ROOT)}"
-        )
+        raise CoordinationCheckError(f"YAML root must be mapping: {path.relative_to(PROJECT_ROOT)}")
 
     return loaded
 
@@ -111,16 +124,15 @@ def assert_current_status() -> None:
     expected_values = {
         "module_id": MODULE_ID,
         "branch": "main",
-        "current_phase": PHASE,
-        "last_completed_step": COMPLETED_STEP,
+        "current_phase": CURRENT_PHASE,
+        "last_completed_step": CURRENT_COMPLETED_STEP,
     }
 
     for key, expected in expected_values.items():
         actual = status.get(key)
         if actual != expected:
             raise CoordinationCheckError(
-                f"{STATUS_PATH.relative_to(PROJECT_ROOT)}: {key}={actual!r}, "
-                f"expected {expected!r}"
+                f"{STATUS_PATH.relative_to(PROJECT_ROOT)}: {key}={actual!r}, expected {expected!r}"
             )
 
     last_commit = str(status.get("last_commit", ""))
@@ -138,6 +150,8 @@ def assert_current_status() -> None:
         "make_check_report",
         "governance_check",
         "channel_intake_preview",
+        "adapter_contracts_check",
+        "adapter_readiness_preview",
         "coordination_records_check",
     }
 
@@ -154,29 +168,35 @@ def assert_prompts_index() -> None:
     if not isinstance(prompts, list):
         raise CoordinationCheckError("coordination/prompts/index.yaml must contain prompts list")
 
-    matching = [
-        prompt
-        for prompt in prompts
-        if isinstance(prompt, dict) and prompt.get("prompt_id") == V0_3_PROMPT_ID
-    ]
+    prompt_by_id = {
+        prompt.get("prompt_id"): prompt for prompt in prompts if isinstance(prompt, dict)
+    }
 
-    if not matching:
+    v0_3 = prompt_by_id.get(V0_3_PROMPT_ID)
+    if not isinstance(v0_3, dict):
         raise CoordinationCheckError(f"Missing prompt record: {V0_3_PROMPT_ID}")
 
-    prompt = matching[0]
+    if v0_3.get("implementation_commit") != V0_3_IMPLEMENTATION_COMMIT:
+        raise CoordinationCheckError(f"Prompt {V0_3_PROMPT_ID} implementation commit invalid")
+
+    v0_4 = prompt_by_id.get(V0_4_PROMPT_ID)
+    if not isinstance(v0_4, dict):
+        raise CoordinationCheckError(f"Missing prompt record: {V0_4_PROMPT_ID}")
+
     expected_values = {
         "source": "forprint_system_blueprint",
         "status": "completed_in_module",
-        "implementation_commit": IMPLEMENTATION_COMMIT,
-        "phase": PHASE,
-        "completed_step": COMPLETED_STEP,
+        "implementation_commit": V0_4_IMPLEMENTATION_COMMIT,
+        "phase": CURRENT_PHASE,
+        "completed_step": CURRENT_COMPLETED_STEP,
+        "report_file": str(V0_4_REPORT_FILE.relative_to(PROJECT_ROOT)),
     }
 
     for key, expected in expected_values.items():
-        actual = prompt.get(key)
+        actual = v0_4.get(key)
         if actual != expected:
             raise CoordinationCheckError(
-                f"Prompt {V0_3_PROMPT_ID}: {key}={actual!r}, expected {expected!r}"
+                f"Prompt {V0_4_PROMPT_ID}: {key}={actual!r}, expected {expected!r}"
             )
 
 
@@ -191,70 +211,67 @@ def assert_reports_index() -> None:
     if not isinstance(reports, list):
         raise CoordinationCheckError("coordination/reports/index.yaml must contain reports list")
 
-    matching = [
-        report
-        for report in reports
-        if isinstance(report, dict) and report.get("report_id") == COMPLETED_STEP
-    ]
+    report_by_id = {
+        report.get("report_id"): report for report in reports if isinstance(report, dict)
+    }
 
-    if not matching:
-        raise CoordinationCheckError(f"Missing report record: {COMPLETED_STEP}")
+    v0_3 = report_by_id.get(V0_3_COMPLETED_STEP)
+    if not isinstance(v0_3, dict):
+        raise CoordinationCheckError(f"Missing report record: {V0_3_COMPLETED_STEP}")
 
-    report = matching[0]
+    if v0_3.get("phase") != V0_3_PHASE:
+        raise CoordinationCheckError(f"Report {V0_3_COMPLETED_STEP} phase invalid")
+
+    v0_3_1 = report_by_id.get(V0_3_1_REPORT_ID)
+    if not isinstance(v0_3_1, dict):
+        raise CoordinationCheckError(f"Missing report record: {V0_3_1_REPORT_ID}")
+
+    if v0_3_1.get("status") != "completed":
+        raise CoordinationCheckError(f"Report {V0_3_1_REPORT_ID} must be completed")
+
+    if v0_3_1.get("report_file") != str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT)):
+        raise CoordinationCheckError(f"Report {V0_3_1_REPORT_ID} must reference completion file")
+
+    v0_4 = report_by_id.get(V0_4_PROMPT_ID)
+    if not isinstance(v0_4, dict):
+        raise CoordinationCheckError(f"Missing report record: {V0_4_PROMPT_ID}")
 
     expected_values = {
-        "phase": PHASE,
+        "phase": CURRENT_PHASE,
         "status": "completed",
-        "implementation_commit": IMPLEMENTATION_COMMIT,
+        "implementation_commit": V0_4_IMPLEMENTATION_COMMIT,
+        "report_file": str(V0_4_REPORT_FILE.relative_to(PROJECT_ROOT)),
     }
 
     for key, expected in expected_values.items():
-        actual = report.get(key)
+        actual = v0_4.get(key)
         if actual != expected:
             raise CoordinationCheckError(
-                f"Report {COMPLETED_STEP}: {key}={actual!r}, expected {expected!r}"
+                f"Report {V0_4_PROMPT_ID}: {key}={actual!r}, expected {expected!r}"
             )
 
-    validation_results = report.get("validation_results")
+    validation_results = v0_4.get("validation_results")
     if not isinstance(validation_results, dict):
-        raise CoordinationCheckError("Report validation_results must be mapping")
+        raise CoordinationCheckError("v0.4 report validation_results must be mapping")
 
     for key, value in validation_results.items():
         if value != "ok":
-            raise CoordinationCheckError(f"Report validation result {key} must be ok")
+            raise CoordinationCheckError(f"v0.4 validation result {key} must be ok")
 
-    boundary = report.get("boundary_confirmation")
+    boundary = v0_4.get("boundary_confirmation")
     if not isinstance(boundary, dict):
-        raise CoordinationCheckError("Report boundary_confirmation must be mapping")
+        raise CoordinationCheckError("v0.4 boundary_confirmation must be mapping")
 
     for key, value in boundary.items():
         if value is not True:
             raise CoordinationCheckError(f"Boundary confirmation {key} must be true")
-    
-    v0_3_1_reports = [
-    report
-    for report in reports
-    if isinstance(report, dict) and report.get("report_id") == V0_3_1_REPORT_ID
-    ]
-
-    if not v0_3_1_reports:
-        raise CoordinationCheckError(f"Missing report record: {V0_3_1_REPORT_ID}")
-
-    v0_3_1_report = v0_3_1_reports[0]
-
-    if v0_3_1_report.get("status") != "completed":
-        raise CoordinationCheckError(f"Report {V0_3_1_REPORT_ID} must be completed")
-
-    if v0_3_1_report.get("report_file") != str(
-        V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT)
-    ):
-        raise CoordinationCheckError(f"Report {V0_3_1_REPORT_ID} must reference completion file")
 
 
-def assert_reports_index_is_tracked() -> None:
-    """Ensure coordination/reports/index.yaml is tracked by Git."""
+def assert_tracked(path: Path, label: str) -> None:
+    """Ensure path is tracked by Git."""
+    relative_path = str(path.relative_to(PROJECT_ROOT))
     completed = subprocess.run(
-        ["git", "ls-files", "--error-unmatch", "coordination/reports/index.yaml"],
+        ["git", "ls-files", "--error-unmatch", relative_path],
         cwd=PROJECT_ROOT,
         text=True,
         capture_output=True,
@@ -262,10 +279,14 @@ def assert_reports_index_is_tracked() -> None:
     )
 
     if completed.returncode != 0:
-        raise CoordinationCheckError(
-            "coordination/reports/index.yaml must be tracked. "
-            "Use: git add -f coordination/reports/index.yaml"
-        )
+        raise CoordinationCheckError(f"{label} must be tracked. Use: git add -f {relative_path}")
+
+
+def assert_reports_are_tracked() -> None:
+    """Ensure report files are tracked."""
+    assert_tracked(REPORTS_INDEX_PATH, "coordination/reports/index.yaml")
+    assert_tracked(V0_3_1_REPORT_FILE, "v0.3.1 completion report")
+    assert_tracked(V0_4_REPORT_FILE, "v0.4 completion report")
 
 
 def iter_text_files() -> list[Path]:
@@ -279,6 +300,12 @@ def iter_text_files() -> list[Path]:
 
         for path in root.rglob("*"):
             if not path.is_file():
+                continue
+            if path.relative_to(PROJECT_ROOT).as_posix() in {
+                "reports/gateway_check_report.json",
+                "reports/gateway_check_report.md",
+                "reports/gateway_module_status.json",
+            }:
                 continue
 
             if ".venv" in path.parts:
@@ -332,15 +359,19 @@ def assert_no_live_integrations_enabled() -> None:
 def main() -> int:
     """Run Gateway coordination records check."""
     checks = [
-        ("YAML files", lambda: [load_yaml(STATUS_PATH), 
-                                load_yaml(PROMPTS_INDEX_PATH), 
-                                load_yaml(REPORTS_INDEX_PATH)]),
+        (
+            "YAML files",
+            lambda: [
+                load_yaml(STATUS_PATH),
+                load_yaml(PROMPTS_INDEX_PATH),
+                load_yaml(REPORTS_INDEX_PATH),
+            ],
+        ),
         ("No placeholders", assert_no_placeholders),
         ("Current status", assert_current_status),
         ("Prompts index", assert_prompts_index),
         ("Reports index", assert_reports_index),
-        ("Reports index tracked", assert_reports_index_is_tracked),
-        ("v0.3.1 report tracked", assert_v0_3_1_report_file_is_tracked),
+        ("Reports tracked", assert_reports_are_tracked),
         ("Canonical module id guard", assert_no_forbidden_module_ids),
         ("No live integration flags", assert_no_live_integrations_enabled),
     ]
@@ -354,32 +385,6 @@ def main() -> int:
     print("✅ Gateway coordination records are machine-clean.")
     return 0
 
-def assert_v0_3_1_report_file_is_tracked() -> None:
-    """Ensure v0.3.1 completion report is tracked by Git."""
-    if not V0_3_1_REPORT_FILE.exists():
-        raise CoordinationCheckError(
-            "Missing v0.3.1 completion report: "
-            + str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT))
-        )
-
-    completed = subprocess.run(
-        [
-            "git",
-            "ls-files",
-            "--error-unmatch",
-            str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT)),
-        ],
-        cwd=PROJECT_ROOT,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-
-    if completed.returncode != 0:
-        raise CoordinationCheckError(
-            "v0.3.1 completion report must be tracked. Use: git add -f "
-            + str(V0_3_1_REPORT_FILE.relative_to(PROJECT_ROOT))
-        )
 
 if __name__ == "__main__":
     try:

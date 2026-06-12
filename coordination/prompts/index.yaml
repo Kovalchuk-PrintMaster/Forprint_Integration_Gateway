@@ -1,5 +1,5 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-11T16:13:12.024431+00:00'
+updated_at: '2026-06-12T13:08:11.756186+00:00'
 prompts:
 - prompt_id: gateway_channel_intake_operational_handoff_contracts_v0_3
   source: forprint_system_blueprint
@@ -7,11 +7,21 @@ prompts:
   implementation_commit: 3b4707a
   finalization_commit: 4b7821f
   coordination_fix_commit: 44ac33a
+  completion_report_commit: 688e9c6
   phase: channel_intake_operational_handoff_contracts_v0_3
   completed_step: gateway_channel_intake_contracts_ready
 - prompt_id: gateway_v0_3_1_coordination_records_fix
   source: forprint_system_blueprint
-  status: applied_in_module
+  status: completed_in_module
   implementation_commit: 44ac33a
+  completion_report_commit: 688e9c6
   phase: channel_intake_operational_handoff_contracts_v0_3_coordination_fix
   completed_step: gateway_v0_3_coordination_records_machine_clean
+- prompt_id: gateway_adapter_contracts_error_taxonomy_v0_4
+  source: forprint_system_blueprint
+  status: completed_in_module
+  implementation_commit: 3a97012
+  coordination_update_commit: 3a97012
+  phase: adapter_contracts_error_taxonomy_v0_4
+  completed_step: gateway_adapter_contracts_ready
+  report_file: coordination/reports/gateway_v0_4_adapter_contracts_error_taxonomy_completion.md

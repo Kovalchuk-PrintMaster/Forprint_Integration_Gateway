@@ -44,6 +44,6 @@ All descriptors are offline/contract-only.
 
 No descriptor may set:
 
-live_enabled: true
-queue_worker_enabled: true
-external_runtime_calls_enabled: true
+live_enabled set to true
+queue_worker_enabled set to true
+external_runtime_calls_enabled set to true

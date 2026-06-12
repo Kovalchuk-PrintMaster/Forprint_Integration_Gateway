@@ -1,15 +1,3 @@
-"""Refresh Gateway coordination records for v0.3.1.
-
-This script only writes module-local coordination files.
-
-It does not:
-- change runtime behavior;
-- call external systems;
-- create databases;
-- create queues;
-- enable live integrations.
-"""
-
 from __future__ import annotations
 
 import subprocess
@@ -22,17 +10,30 @@ import yaml
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODULE_ID = "forprint_integration_gateway"
-PHASE = "channel_intake_operational_handoff_contracts_v0_3"
-COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
 
+CURRENT_PHASE = "adapter_contracts_error_taxonomy_v0_4"
+CURRENT_COMPLETED_STEP = "gateway_adapter_contracts_ready"
+
+V0_3_PHASE = "channel_intake_operational_handoff_contracts_v0_3"
+V0_3_COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
 V0_3_PROMPT_ID = "gateway_channel_intake_operational_handoff_contracts_v0_3"
+V0_3_IMPLEMENTATION_COMMIT = "3b4707a"
+V0_3_FINALIZATION_COMMIT = "4b7821f"
+
 V0_3_1_PROMPT_ID = "gateway_v0_3_1_coordination_records_fix"
+V0_3_1_PHASE = "channel_intake_operational_handoff_contracts_v0_3_coordination_fix"
+V0_3_1_COMPLETED_STEP = "gateway_v0_3_coordination_records_machine_clean"
+V0_3_1_FIX_COMMIT = "44ac33a"
+V0_3_1_COMPLETION_REPORT_COMMIT = "688e9c6"
 V0_3_1_COMPLETION_REPORT_FILE = (
     "coordination/reports/gateway_v0_3_1_coordination_records_fix_completion.md"
 )
 
-IMPLEMENTATION_COMMIT = "3b4707a"
-V0_3_FINALIZATION_COMMIT = "4b7821f"
+V0_4_PROMPT_ID = "gateway_adapter_contracts_error_taxonomy_v0_4"
+V0_4_IMPLEMENTATION_COMMIT = "3a97012"
+V0_4_COMPLETION_REPORT_FILE = (
+    "coordination/reports/gateway_v0_4_adapter_contracts_error_taxonomy_completion.md"
+)
 
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
 PROMPTS_INDEX_PATH = PROJECT_ROOT / "coordination" / "prompts" / "index.yaml"
@@ -91,6 +92,10 @@ def build_boundary_confirmation() -> dict[str, bool]:
         "no_website_runtime_calls_added": True,
         "no_crm_runtime_calls_added": True,
         "no_operational_registry_runtime_calls_added": True,
+        "no_calculator_runtime_calls_added": True,
+        "no_library_runtime_calls_added": True,
+        "no_prepress_runtime_calls_added": True,
+        "no_accounting_runtime_calls_added": True,
         "no_1c_writes_added": True,
         "no_automatic_posting_added": True,
         "no_final_price_calculation_added": True,
@@ -99,20 +104,22 @@ def build_boundary_confirmation() -> dict[str, bool]:
     }
 
 
-def refresh_current_status (updated_at: str, branch: str, commit: str) -> None:
+def refresh_current_status(updated_at: str, branch: str, commit: str) -> None:
     """Refresh coordination/status/current_status.yaml."""
     payload = {
         "module_id": MODULE_ID,
         "last_updated": updated_at,
         "branch": branch,
         "last_commit": commit,
-        "current_phase": PHASE,
-        "last_completed_step": COMPLETED_STEP,
+        "current_phase": CURRENT_PHASE,
+        "last_completed_step": CURRENT_COMPLETED_STEP,
         "checks": {
             "make_check": "ok",
             "make_check_report": "ok",
             "governance_check": "ok",
             "channel_intake_preview": "ok",
+            "adapter_contracts_check": "ok",
+            "adapter_readiness_preview": "ok",
             "coordination_records_check": "ok",
         },
         "boundary_confirmation": build_boundary_confirmation(),
@@ -130,19 +137,31 @@ def refresh_prompts_index(updated_at: str, commit: str) -> None:
                 "prompt_id": V0_3_PROMPT_ID,
                 "source": "forprint_system_blueprint",
                 "status": "completed_in_module",
-                "implementation_commit": IMPLEMENTATION_COMMIT,
+                "implementation_commit": V0_3_IMPLEMENTATION_COMMIT,
                 "finalization_commit": V0_3_FINALIZATION_COMMIT,
-                "coordination_fix_commit": commit,
-                "phase": PHASE,
-                "completed_step": COMPLETED_STEP,
+                "coordination_fix_commit": V0_3_1_FIX_COMMIT,
+                "completion_report_commit": V0_3_1_COMPLETION_REPORT_COMMIT,
+                "phase": V0_3_PHASE,
+                "completed_step": V0_3_COMPLETED_STEP,
             },
             {
                 "prompt_id": V0_3_1_PROMPT_ID,
                 "source": "forprint_system_blueprint",
-                "status": "applied_in_module",
-                "implementation_commit": commit,
-                "phase": f"{PHASE}_coordination_fix",
-                "completed_step": "gateway_v0_3_coordination_records_machine_clean",
+                "status": "completed_in_module",
+                "implementation_commit": V0_3_1_FIX_COMMIT,
+                "completion_report_commit": V0_3_1_COMPLETION_REPORT_COMMIT,
+                "phase": V0_3_1_PHASE,
+                "completed_step": V0_3_1_COMPLETED_STEP,
+            },
+            {
+                "prompt_id": V0_4_PROMPT_ID,
+                "source": "forprint_system_blueprint",
+                "status": "completed_in_module",
+                "implementation_commit": V0_4_IMPLEMENTATION_COMMIT,
+                "coordination_update_commit": commit,
+                "phase": CURRENT_PHASE,
+                "completed_step": CURRENT_COMPLETED_STEP,
+                "report_file": V0_4_COMPLETION_REPORT_FILE,
             },
         ],
     }
@@ -156,12 +175,13 @@ def refresh_reports_index(updated_at: str, commit: str) -> None:
         "updated_at": updated_at,
         "reports": [
             {
-                "report_id": COMPLETED_STEP,
-                "phase": PHASE,
+                "report_id": V0_3_COMPLETED_STEP,
+                "phase": V0_3_PHASE,
                 "status": "completed",
-                "implementation_commit": IMPLEMENTATION_COMMIT,
+                "implementation_commit": V0_3_IMPLEMENTATION_COMMIT,
                 "finalization_commit": V0_3_FINALIZATION_COMMIT,
-                "coordination_fix_commit": commit,
+                "coordination_fix_commit": V0_3_1_FIX_COMMIT,
+                "completion_report_commit": V0_3_1_COMPLETION_REPORT_COMMIT,
                 "validation_results": {
                     "governance_check": "ok",
                     "make_check": "ok",
@@ -173,19 +193,39 @@ def refresh_reports_index(updated_at: str, commit: str) -> None:
                 },
                 "boundary_confirmation": build_boundary_confirmation(),
             },
-
             {
-                "report_id": "gateway_v0_3_1_coordination_records_fix",
-                "phase": f"{PHASE}_coordination_fix",
+                "report_id": V0_3_1_PROMPT_ID,
+                "phase": V0_3_1_PHASE,
                 "status": "completed",
-                "implementation_commit": "44ac33a",
-                "prompt_reader_fix_commit": "feca6f3",
+                "implementation_commit": V0_3_1_FIX_COMMIT,
+                "completion_report_commit": V0_3_1_COMPLETION_REPORT_COMMIT,
                 "report_file": V0_3_1_COMPLETION_REPORT_FILE,
                 "validation_results": {
                     "governance_check": "ok",
                     "make_check": "ok",
                     "make_check_report": "ok",
                     "channel_intake_preview": "ok",
+                    "coordination_records_check": "ok",
+                    "canonical_module_id_guard": "ok",
+                    "no_live_integrations_guard": "ok",
+                    "reports_index_tracked": "ok",
+                },
+                "boundary_confirmation": build_boundary_confirmation(),
+            },
+            {
+                "report_id": V0_4_PROMPT_ID,
+                "phase": CURRENT_PHASE,
+                "status": "completed",
+                "implementation_commit": V0_4_IMPLEMENTATION_COMMIT,
+                "coordination_update_commit": commit,
+                "report_file": V0_4_COMPLETION_REPORT_FILE,
+                "validation_results": {
+                    "governance_check": "ok",
+                    "make_check": "ok",
+                    "make_check_report": "ok",
+                    "channel_intake_preview": "ok",
+                    "adapter_contracts_check": "ok",
+                    "adapter_readiness_preview": "ok",
                     "coordination_records_check": "ok",
                     "canonical_module_id_guard": "ok",
                     "no_live_integrations_guard": "ok",
