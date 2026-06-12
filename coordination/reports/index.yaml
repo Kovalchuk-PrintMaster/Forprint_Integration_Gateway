@@ -1,5 +1,5 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-12T13:08:11.756186+00:00'
+updated_at: '2026-06-12T15:35:55.353999+00:00'
 reports:
 - report_id: gateway_channel_intake_contracts_ready
   phase: channel_intake_operational_handoff_contracts_v0_3
@@ -73,7 +73,7 @@ reports:
   phase: adapter_contracts_error_taxonomy_v0_4
   status: completed
   implementation_commit: 3a97012
-  coordination_update_commit: 3a97012
+  coordination_update_commit: 3f51c41
   report_file: coordination/reports/gateway_v0_4_adapter_contracts_error_taxonomy_completion.md
   validation_results:
     governance_check: ok
@@ -82,6 +82,44 @@ reports:
     channel_intake_preview: ok
     adapter_contracts_check: ok
     adapter_readiness_preview: ok
+    coordination_records_check: ok
+    canonical_module_id_guard: ok
+    no_live_integrations_guard: ok
+    reports_index_tracked: ok
+  boundary_confirmation:
+    no_production_api_added: true
+    no_real_external_integrations_added: true
+    no_database_ownership_added: true
+    no_operational_data_ownership_added: true
+    no_queue_redis_s3_dependency_added: true
+    no_telegram_runtime_calls_added: true
+    no_website_runtime_calls_added: true
+    no_crm_runtime_calls_added: true
+    no_operational_registry_runtime_calls_added: true
+    no_calculator_runtime_calls_added: true
+    no_library_runtime_calls_added: true
+    no_prepress_runtime_calls_added: true
+    no_accounting_runtime_calls_added: true
+    no_1c_writes_added: true
+    no_automatic_posting_added: true
+    no_final_price_calculation_added: true
+    examples_are_offline_fixtures_only: true
+    gateway_remains_validation_routing_boundary: true
+- report_id: gateway_contract_compatibility_replay_dry_run_v0_5
+  phase: contract_compatibility_replay_dry_run_v0_5
+  status: completed
+  implementation_commit: 1a7ed1d
+  coordination_update_commit: 1a7ed1d
+  report_file: coordination/reports/gateway_v0_5_contract_compatibility_replay_dry_run_completion.md
+  validation_results:
+    governance_check: ok
+    make_check: ok
+    make_check_report: ok
+    channel_intake_preview: ok
+    adapter_readiness_preview: ok
+    contract_compatibility_check: ok
+    compatibility_matrix_preview: ok
+    replay_fixtures_preview: ok
     coordination_records_check: ok
     canonical_module_id_guard: ok
     no_live_integrations_guard: ok
