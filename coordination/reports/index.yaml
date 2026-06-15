@@ -1,5 +1,5 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-15T15:14:30.849566+00:00'
+updated_at: '2026-06-15T16:14:45.794742+00:00'
 reports:
 - report_id: gateway_channel_intake_contracts_ready
   phase: channel_intake_operational_handoff_contracts_v0_3
@@ -106,10 +106,10 @@ reports:
     examples_are_offline_fixtures_only: true
     gateway_remains_validation_routing_boundary: true
 - report_id: gateway_contract_compatibility_replay_dry_run_v0_5
-  phase: contract_release_consumer_acceptance_v0_6
+  phase: contract_compatibility_replay_dry_run_v0_5
   status: completed
   implementation_commit: 1a7ed1d
-  coordination_update_commit: 7d74ec1
+  coordination_update_commit: 6e8626f
   report_file: coordination/reports/gateway_v0_5_contract_compatibility_replay_dry_run_completion.md
   validation_results:
     governance_check: ok
@@ -117,7 +117,6 @@ reports:
     make_check_report: ok
     channel_intake_preview: ok
     adapter_readiness_preview: ok
-    contract_compatibility_check: ok
     compatibility_matrix_preview: ok
     replay_fixtures_preview: ok
     coordination_records_check: ok
@@ -147,7 +146,7 @@ reports:
   phase: contract_release_consumer_acceptance_v0_6
   status: completed
   implementation_commit: 7d74ec1
-  coordination_update_commit: 7d74ec1
+  coordination_update_commit: 3690cc3
   report_file: coordination/reports/gateway_v0_6_contract_release_consumer_acceptance_completion.md
   validation_results:
     governance_check: ok

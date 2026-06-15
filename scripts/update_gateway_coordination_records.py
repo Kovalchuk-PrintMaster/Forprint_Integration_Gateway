@@ -38,15 +38,21 @@ V0_4_COMPLETION_REPORT_FILE = (
     "coordination/reports/gateway_v0_4_adapter_contracts_error_taxonomy_completion.md"
 )
 
+V0_5_PHASE = "contract_compatibility_replay_dry_run_v0_5"
+V0_5_COMPLETED_STEP = "gateway_contract_compatibility_ready"
 V0_5_PROMPT_ID = "gateway_contract_compatibility_replay_dry_run_v0_5"
 V0_5_IMPLEMENTATION_COMMIT = "1a7ed1d"
+V0_5_COMPLETION_REPORT_COMMIT = "6e8626f"
 V0_5_COMPLETION_REPORT_FILE = (
     "coordination/reports/"
     "gateway_v0_5_contract_compatibility_replay_dry_run_completion.md"
 )
 
+V0_6_PHASE = "contract_release_consumer_acceptance_v0_6"
+V0_6_COMPLETED_STEP = "gateway_contract_release_ready"
 V0_6_PROMPT_ID = "gateway_contract_release_consumer_acceptance_v0_6"
 V0_6_IMPLEMENTATION_COMMIT = "7d74ec1"
+V0_6_COMPLETION_REPORT_COMMIT = "3690cc3"
 V0_6_COMPLETION_REPORT_FILE = (
     "coordination/reports/"
     "gateway_v0_6_contract_release_consumer_acceptance_completion.md"
@@ -188,25 +194,25 @@ def refresh_prompts_index(updated_at: str, commit: str) -> None:
                 "report_file": V0_4_COMPLETION_REPORT_FILE,
             },
             {
-                "prompt_id": V0_5_PROMPT_ID,
-                "source": "forprint_system_blueprint",
-                "status": "completed_in_module",
-                "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
-                "coordination_update_commit": commit,
-                "phase": CURRENT_PHASE,
-                "completed_step": CURRENT_COMPLETED_STEP,
-                "report_file": V0_5_COMPLETION_REPORT_FILE,
-            },
-            {
-                "prompt_id": V0_6_PROMPT_ID,
-                "source": "forprint_system_blueprint",
-                "status": "completed_in_module",
-                "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
-                "coordination_update_commit": commit,
-                "phase": CURRENT_PHASE,
-                "completed_step": CURRENT_COMPLETED_STEP,
-                "report_file": V0_6_COMPLETION_REPORT_FILE,
-            },
+            "prompt_id": V0_5_PROMPT_ID,
+            "source": "forprint_system_blueprint",
+            "status": "completed_in_module",
+            "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
+            "coordination_update_commit": V0_5_COMPLETION_REPORT_COMMIT,
+            "phase": V0_5_PHASE,
+            "completed_step": V0_5_COMPLETED_STEP,
+            "report_file": V0_5_COMPLETION_REPORT_FILE,
+        },
+        {
+            "prompt_id": V0_6_PROMPT_ID,
+            "source": "forprint_system_blueprint",
+            "status": "completed_in_module",
+            "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
+            "coordination_update_commit": V0_6_COMPLETION_REPORT_COMMIT,
+            "phase": V0_6_PHASE,
+            "completed_step": V0_6_COMPLETED_STEP,
+            "report_file": V0_6_COMPLETION_REPORT_FILE,
+        },
         ],
     }
     write_yaml(PROMPTS_INDEX_PATH, payload)
@@ -277,55 +283,54 @@ def refresh_reports_index(updated_at: str, commit: str) -> None:
                 },
                 "boundary_confirmation": build_boundary_confirmation(),
             },
-            {
-                "report_id": V0_5_PROMPT_ID,
-                "phase": CURRENT_PHASE,
-                "status": "completed",
-                "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
-                "coordination_update_commit": commit,
-                "report_file": V0_5_COMPLETION_REPORT_FILE,
-                "validation_results": {
-                    "governance_check": "ok",
-                    "make_check": "ok",
-                    "make_check_report": "ok",
-                    "channel_intake_preview": "ok",
-                    "adapter_readiness_preview": "ok",
-                    "contract_compatibility_check": "ok",
-                    "compatibility_matrix_preview": "ok",
-                    "replay_fixtures_preview": "ok",
-                    "coordination_records_check": "ok",
-                    "canonical_module_id_guard": "ok",
-                    "no_live_integrations_guard": "ok",
-                    "reports_index_tracked": "ok",
-                },
-                "boundary_confirmation": build_boundary_confirmation(),
+        {
+            "report_id": V0_5_PROMPT_ID,
+            "phase": V0_5_PHASE,
+            "status": "completed",
+            "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
+            "coordination_update_commit": V0_5_COMPLETION_REPORT_COMMIT,
+            "report_file": V0_5_COMPLETION_REPORT_FILE,
+            "validation_results": {
+                "governance_check": "ok",
+                "make_check": "ok",
+                "make_check_report": "ok",
+                "channel_intake_preview": "ok",
+                "adapter_readiness_preview": "ok",
+                "compatibility_matrix_preview": "ok",
+                "replay_fixtures_preview": "ok",
+                "coordination_records_check": "ok",
+                "canonical_module_id_guard": "ok",
+                "no_live_integrations_guard": "ok",
+                "reports_index_tracked": "ok",
             },
-            {
-                "report_id": V0_6_PROMPT_ID,
-                "phase": CURRENT_PHASE,
-                "status": "completed",
-                "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
-                "coordination_update_commit": commit,
-                "report_file": V0_6_COMPLETION_REPORT_FILE,
-                "validation_results": {
-                    "governance_check": "ok",
-                    "make_check": "ok",
-                    "make_check_report": "ok",
-                    "channel_intake_preview": "ok",
-                    "adapter_readiness_preview": "ok",
-                    "compatibility_matrix_preview": "ok",
-                    "replay_fixtures_preview": "ok",
-                    "contract_release_check": "ok",
-                    "contract_release_preview": "ok",
-                    "consumer_acceptance_preview": "ok",
-                    "backward_compatibility_preview": "ok",
-                    "coordination_records_check": "ok",
-                    "canonical_module_id_guard": "ok",
-                    "no_live_integrations_guard": "ok",
-                    "reports_index_tracked": "ok",
-                },
-                "boundary_confirmation": build_boundary_confirmation(),
+            "boundary_confirmation": build_boundary_confirmation(),
+        },
+        {
+            "report_id": V0_6_PROMPT_ID,
+            "phase": V0_6_PHASE,
+            "status": "completed",
+            "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
+            "coordination_update_commit": V0_6_COMPLETION_REPORT_COMMIT,
+            "report_file": V0_6_COMPLETION_REPORT_FILE,
+            "validation_results": {
+                "governance_check": "ok",
+                "make_check": "ok",
+                "make_check_report": "ok",
+                "channel_intake_preview": "ok",
+                "adapter_readiness_preview": "ok",
+                "compatibility_matrix_preview": "ok",
+                "replay_fixtures_preview": "ok",
+                "contract_release_check": "ok",
+                "contract_release_preview": "ok",
+                "consumer_acceptance_preview": "ok",
+                "backward_compatibility_preview": "ok",
+                "coordination_records_check": "ok",
+                "canonical_module_id_guard": "ok",
+                "no_live_integrations_guard": "ok",
+                "reports_index_tracked": "ok",
             },
+            "boundary_confirmation": build_boundary_confirmation(),
+        },
         ],
     }
     write_yaml(REPORTS_INDEX_PATH, payload)

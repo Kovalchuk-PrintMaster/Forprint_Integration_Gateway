@@ -12,8 +12,8 @@ import yaml
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODULE_ID = "forprint_integration_gateway"
-CURRENT_PHASE = "contract_compatibility_replay_dry_run_v0_5"
-CURRENT_COMPLETED_STEP = "gateway_contract_compatibility_ready"
+CURRENT_PHASE = "contract_release_consumer_acceptance_v0_6"
+CURRENT_COMPLETED_STEP = "gateway_contract_release_ready"
 
 V0_3_PHASE = "channel_intake_operational_handoff_contracts_v0_3"
 V0_3_COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
@@ -39,6 +39,8 @@ V0_4_REPORT_FILE = (
     / "gateway_v0_4_adapter_contracts_error_taxonomy_completion.md"
 )
 
+V0_5_PHASE = "contract_compatibility_replay_dry_run_v0_5"
+V0_5_COMPLETED_STEP = "gateway_contract_compatibility_ready"
 V0_5_PROMPT_ID = "gateway_contract_compatibility_replay_dry_run_v0_5"
 V0_5_IMPLEMENTATION_COMMIT = "1a7ed1d"
 V0_5_REPORT_FILE = (
@@ -48,6 +50,8 @@ V0_5_REPORT_FILE = (
     / "gateway_v0_5_contract_compatibility_replay_dry_run_completion.md"
 )
 
+V0_6_PHASE = "contract_release_consumer_acceptance_v0_6"
+V0_6_COMPLETED_STEP = "gateway_contract_release_ready"
 V0_6_PROMPT_ID = "gateway_contract_release_consumer_acceptance_v0_6"
 V0_6_IMPLEMENTATION_COMMIT = "7d74ec1"
 V0_6_REPORT_FILE = (
@@ -241,8 +245,8 @@ def assert_prompts_index() -> None:
         "source": "forprint_system_blueprint",
         "status": "completed_in_module",
         "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
-        "phase": CURRENT_PHASE,
-        "completed_step": CURRENT_COMPLETED_STEP,
+        "phase": V0_5_PHASE,
+        "completed_step": V0_5_COMPLETED_STEP,
         "report_file": str(V0_5_REPORT_FILE.relative_to(PROJECT_ROOT)),
     }
 
@@ -339,10 +343,10 @@ def assert_reports_index() -> None:
         raise CoordinationCheckError(f"Missing report record: {V0_5_PROMPT_ID}")
 
     v0_5_expected_values = {
-        "phase": CURRENT_PHASE,
-        "status": "completed",
-        "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
-        "report_file": str(V0_5_REPORT_FILE.relative_to(PROJECT_ROOT)),
+    "phase": V0_5_PHASE,
+    "status": "completed",
+    "implementation_commit": V0_5_IMPLEMENTATION_COMMIT,
+    "report_file": str(V0_5_REPORT_FILE.relative_to(PROJECT_ROOT)),
     }
 
     for key, expected in v0_5_expected_values.items():
@@ -374,7 +378,7 @@ def assert_reports_index() -> None:
           raise CoordinationCheckError(f"Missing report record: {V0_6_PROMPT_ID}")
 
     v0_6_expected_values = {
-        "phase": CURRENT_PHASE,
+        "phase": V0_6_PHASE,
         "status": "completed",
         "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
         "report_file": str(V0_6_REPORT_FILE.relative_to(PROJECT_ROOT)),
