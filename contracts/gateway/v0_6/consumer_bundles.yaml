@@ -1,0 +1,96 @@
+bundle_set_id: gateway_consumer_bundles_v0_6
+release_version: v0.6
+live_delivery_enabled: false
+bundles:
+- bundle_id: crm_contract_bundle_v0_6
+  consumer_module: forprint_crm
+  purpose:
+  - order intake from Telegram/Website
+  - operator-facing workflow handoff
+  - client lookup requests
+  - no ownership of all operational truth
+  accepted_contracts:
+  - forprint_crm.order_intake
+  producer_modules:
+  - telegram_bot
+  - website
+  live_enabled: false
+- bundle_id: operational_registry_contract_bundle_v0_6
+  consumer_module: forprint_operational_registry
+  purpose:
+  - client lookup candidates
+  - order handoff candidates
+  - operational truth ownership
+  - dry-run candidate acceptance only
+  accepted_contracts:
+  - forprint_operational_registry.client_lookup_candidate
+  - forprint_operational_registry.order_handoff_candidate
+  producer_modules:
+  - forprint_crm
+  - telegram_bot
+  live_enabled: false
+- bundle_id: calculator_engine_contract_bundle_v0_6
+  consumer_module: calculator_engine
+  purpose:
+  - quote preview request contracts
+  - no final price calculation inside Gateway
+  - calculator remains pricing owner
+  accepted_contracts:
+  - calculator_engine.quote_preview
+  producer_modules:
+  - website
+  live_enabled: false
+- bundle_id: prepress_hub_contract_bundle_v0_6
+  consumer_module: forprint_prepress_hub
+  purpose:
+  - file/prepress job candidate contracts
+  - future Mobile App file request scenario
+  - no real file transfer
+  accepted_contracts:
+  - forprint_prepress_hub.prepress_job_candidate
+  producer_modules:
+  - mobile_app
+  live_enabled: false
+- bundle_id: accounting_registry_contract_bundle_v0_6
+  consumer_module: forprint_accounting_registry
+  purpose:
+  - accounting reference candidate only
+  - no posting
+  - no 1C writes
+  - no automatic accounting mutation
+  accepted_contracts:
+  - forprint_accounting_registry.accounting_reference_candidate
+  producer_modules:
+  - forprint_integration_gateway
+  live_enabled: false
+- bundle_id: telegram_bot_contract_bundle_v0_6
+  consumer_module: telegram_bot
+  purpose:
+  - channel intake producer contract
+  - no live Telegram API call from Gateway
+  accepted_contracts:
+  - telegram_bot.channel_intake_producer
+  producer_modules:
+  - telegram_bot
+  live_enabled: false
+- bundle_id: website_contract_bundle_v0_6
+  consumer_module: website
+  purpose:
+  - website form intake producer contract
+  - no live Website runtime call from Gateway
+  accepted_contracts:
+  - website.channel_intake_producer
+  producer_modules:
+  - website
+  live_enabled: false
+- bundle_id: mobile_app_contract_bundle_v0_6
+  consumer_module: mobile_app
+  purpose:
+  - planned/future only
+  - must remain non-active runtime
+  accepted_contracts:
+  - mobile_app.future_channel_intake_producer
+  producer_modules:
+  - mobile_app
+  runtime_status: planned
+  live_enabled: false

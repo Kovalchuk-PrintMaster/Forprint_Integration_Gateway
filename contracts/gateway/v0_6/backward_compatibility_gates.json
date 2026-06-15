@@ -1,0 +1,54 @@
+{
+  "gate_set_id": "gateway_backward_compatibility_gates_v0_6",
+  "release_version": "v0.6",
+  "gates": [
+    {
+      "gate_id": "v0_3_channel_intake_examples",
+      "previous_layer": "v0.3",
+      "protected_concept": "channel intake examples still pass",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "v0_4_adapter_readiness",
+      "previous_layer": "v0.4",
+      "protected_concept": "adapter readiness still passes",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "v0_5_compatibility_matrix",
+      "previous_layer": "v0.5",
+      "protected_concept": "compatibility matrix still passes",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "v0_5_replay_fixtures",
+      "previous_layer": "v0.5",
+      "protected_concept": "replay fixtures still pass",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "canonical_route_targets",
+      "previous_layer": "all",
+      "protected_concept": "route target module ids remain canonical",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "no_live_delivery",
+      "previous_layer": "all",
+      "protected_concept": "no live delivery is enabled",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "accounting_policy_block",
+      "previous_layer": "all",
+      "protected_concept": "Accounting/1C/posting are blocked",
+      "expected_status": "pass"
+    },
+    {
+      "gate_id": "mobile_app_future_planned",
+      "previous_layer": "all",
+      "protected_concept": "Mobile App remains future/planned",
+      "expected_status": "pass"
+    }
+  ]
+}

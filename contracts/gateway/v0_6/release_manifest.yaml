@@ -1,0 +1,95 @@
+release_id: gateway_contract_release_v0_6
+release_version: v0.6
+gateway_module_id: forprint_integration_gateway
+contract_status: offline_contract_release
+updated_at: '2026-06-12T16:00:59.641525+00:00'
+live_delivery_enabled: false
+source_commits:
+  v0_4_implementation: 3a97012
+  v0_4_completion_report: 3f51c41
+  v0_5_implementation: 1a7ed1d
+  v0_5_completion_report: 6e8626f
+supported_consumer_modules:
+- forprint_crm
+- forprint_operational_registry
+- calculator_engine
+- forprint_prepress_hub
+- forprint_accounting_registry
+- telegram_bot
+- website
+- mobile_app
+supported_producer_modules:
+- telegram_bot
+- website
+- forprint_crm
+- mobile_app
+- forprint_integration_gateway
+compatibility_baseline:
+  channel_intake: v0.3
+  adapter_contracts: v0.4
+  compatibility_matrix: v0.5
+  replay_fixtures: v0.5
+  contract_release: v0.6
+artifacts:
+- artifact_id: channel_intake
+  path: contracts/gateway/v0_6/artifacts/channel_intake.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: adapter_contracts
+  path: contracts/gateway/v0_6/artifacts/adapter_contracts.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: error_taxonomy
+  path: contracts/gateway/v0_6/artifacts/error_taxonomy.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: delivery_policy
+  path: contracts/gateway/v0_6/artifacts/delivery_policy.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: compatibility_matrix
+  path: contracts/gateway/v0_6/artifacts/compatibility_matrix.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: dry_run_delivery_planner
+  path: contracts/gateway/v0_6/artifacts/dry_run_delivery_planner.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: replay_fixtures
+  path: contracts/gateway/v0_6/artifacts/replay_fixtures.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: consumer_acceptance
+  path: contracts/gateway/v0_6/artifacts/consumer_acceptance.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: consumer_bundles
+  path: contracts/gateway/v0_6/consumer_bundles.yaml
+  machine_readable: true
+  human_readable: true
+- artifact_id: consumer_acceptance_fixtures
+  path: contracts/gateway/v0_6/consumer_acceptance_fixtures.json
+  machine_readable: true
+  human_readable: false
+- artifact_id: backward_compatibility_gates
+  path: contracts/gateway/v0_6/backward_compatibility_gates.json
+  machine_readable: true
+  human_readable: false
+- artifact_id: changelog
+  path: contracts/gateway/v0_6/changelog.md
+  machine_readable: false
+  human_readable: true
+boundary_confirmation:
+  offline_only: true
+  dry_run_only: true
+  contract_only: true
+  no_live_api: true
+  no_database: true
+  no_queues: true
+  no_redis: true
+  no_s3: true
+  no_runtime_adapter_calls: true
+  no_one_c_writes: true
+  no_automatic_posting: true
+  no_final_price_calculation: true
+  no_generated_production_sdks: true

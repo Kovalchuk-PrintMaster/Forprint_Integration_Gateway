@@ -4,6 +4,8 @@ PIP=.venv_gateway/bin/pip
 .PHONY: install test format check smoke check-report clean
 		lint-fix lint channel-intake-preview smoke
 		coordination-records-refresh coordination-records-check
+		contract-release-check contract-release-preview 
+		consumer-acceptance-preview backward-compatibility-preview
 
 install:
 	$(PIP) install --upgrade pip
@@ -134,3 +136,15 @@ compatibility-matrix-preview:
 .PHONY: replay-fixtures-preview
 replay-fixtures-preview:
 	$(PYTHON) scripts/run_replay_fixtures_preview.py
+
+contract-release-check:
+	$(PYTHON) scripts/check_gateway_contract_release.py
+
+contract-release-preview:
+	$(PYTHON) scripts/run_contract_release_preview.py
+
+consumer-acceptance-preview:
+	$(PYTHON) scripts/run_consumer_acceptance_preview.py
+
+backward-compatibility-preview:
+	$(PYTHON) scripts/run_backward_compatibility_preview.py

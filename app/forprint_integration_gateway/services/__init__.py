@@ -19,6 +19,15 @@ from forprint_integration_gateway.services.contract_compatibility import (
     replay_fixture,
     validate_all_contract_compatibility,
 )
+from forprint_integration_gateway.services.contract_release import (
+    load_acceptance_fixtures,
+    load_backward_gates,
+    load_consumer_bundles,
+    load_release_manifest,
+    replay_backward_compatibility_gates,
+    replay_consumer_acceptance_fixtures,
+    validate_all_contract_release,
+)
 from forprint_integration_gateway.services.example_loader import (
     load_contract_fixture,
     load_example_request,
@@ -51,4 +60,11 @@ __all__ = [
     "replay_all_fixtures",
     "replay_fixture",
     "validate_all_contract_compatibility",
+    "load_acceptance_fixtures",
+    "load_backward_gates",
+    "load_consumer_bundles",
+    "load_release_manifest",
+    "replay_backward_compatibility_gates",
+    "replay_consumer_acceptance_fixtures",
+    "validate_all_contract_release",
 ]

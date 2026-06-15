@@ -1,0 +1,11 @@
+artifact_id: channel_intake
+release_version: v0.6
+gateway_module_id: forprint_integration_gateway
+live_delivery_enabled: false
+status: offline_contract_artifact
+description: Gateway v0.6 packaged artifact for channel_intake. This is a contract-only
+  offline descriptor.
+boundary_confirmation:
+  offline_only: true
+  dry_run_only: true
+  no_runtime_transport: true

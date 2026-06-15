@@ -558,6 +558,26 @@ def main() -> int:
             expected_result="v0.5 replay fixtures preview проходить",
             command=[sys.executable, "scripts/run_replay_fixtures_preview.py"],
         ),
+        run_command_check(
+            name="Contract release check",
+            expected_result="v0.6 release manifest і consumer bundles валідні",
+            command=[sys.executable, "scripts/check_gateway_contract_release.py"],
+        ),
+        run_command_check(
+            name="Contract release preview",
+            expected_result="v0.6 contract release preview проходить",
+            command=[sys.executable, "scripts/run_contract_release_preview.py"],
+        ),
+        run_command_check(
+            name="Consumer acceptance preview",
+            expected_result="v0.6 consumer acceptance fixtures проходять",
+            command=[sys.executable, "scripts/run_consumer_acceptance_preview.py"],
+        ),
+        run_command_check(
+            name="Backward compatibility preview",
+            expected_result="v0.6 backward compatibility gates проходять",
+            command=[sys.executable, "scripts/run_backward_compatibility_preview.py"],
+        ),
 		validate_examples_and_contract_fixtures(),
 		validate_manifest(),
 		validate_routes(),

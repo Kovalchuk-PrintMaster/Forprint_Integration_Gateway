@@ -1,0 +1,168 @@
+{
+  "fixture_set_id": "gateway_consumer_acceptance_fixtures_v0_6",
+  "release_version": "v0.6",
+  "fixtures": [
+    {
+      "fixture_id": "crm_accepts_order_intake_contract",
+      "consumer_module": "forprint_crm",
+      "producer_source_flow": "telegram_bot.new_order_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "compatible",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "client_identity_hint",
+        "summary"
+      ],
+      "forbidden_fields": [
+        "live_delivery_enabled"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "operational_registry_accepts_order_handoff_candidate",
+      "consumer_module": "forprint_operational_registry",
+      "producer_source_flow": "telegram_bot.new_order_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "compatible_dry_run_only",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "source_intake_id",
+        "target_owner_module"
+      ],
+      "forbidden_fields": [
+        "live_write_enabled"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "operational_registry_accepts_client_lookup_candidate",
+      "consumer_module": "forprint_operational_registry",
+      "producer_source_flow": "forprint_crm.client_lookup_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "compatible",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "client_identity_hint",
+        "lookup_reason"
+      ],
+      "forbidden_fields": [
+        "database_write"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "calculator_accepts_quote_preview_dry_run",
+      "consumer_module": "calculator_engine",
+      "producer_source_flow": "website.price_estimate_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "compatible_dry_run_only",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "product_hint",
+        "quantity_hint"
+      ],
+      "forbidden_fields": [
+        "final_price_calculation"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "prepress_accepts_future_prepress_job_candidate",
+      "consumer_module": "forprint_prepress_hub",
+      "producer_source_flow": "mobile_app.file_prepress_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "planned_future",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "file_ref",
+        "prepress_hint"
+      ],
+      "forbidden_fields": [
+        "real_file_transfer"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "accounting_rejects_posting_write_attempts",
+      "consumer_module": "forprint_accounting_registry",
+      "producer_source_flow": "telegram_bot.new_order_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "blocked_by_policy",
+      "expected_dry_run_plan_status": "blocked",
+      "required_fields": [
+        "accounting_reference_candidate"
+      ],
+      "forbidden_fields": [
+        "automatic_posting",
+        "one_c_write"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "blocked",
+      "expected_result": "blocked"
+    },
+    {
+      "fixture_id": "telegram_producer_channel_intake_accepted",
+      "consumer_module": "telegram_bot",
+      "producer_source_flow": "telegram_bot.new_order_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "compatible",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "intake_id",
+        "channel_source"
+      ],
+      "forbidden_fields": [
+        "telegram_runtime_call"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "website_producer_channel_intake_accepted",
+      "consumer_module": "website",
+      "producer_source_flow": "website.price_estimate_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "compatible_dry_run_only",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "intake_id",
+        "channel_source"
+      ],
+      "forbidden_fields": [
+        "website_runtime_call"
+      ],
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    },
+    {
+      "fixture_id": "mobile_app_fixture_remains_planned_future",
+      "consumer_module": "mobile_app",
+      "producer_source_flow": "mobile_app.file_prepress_request",
+      "expected_contract_version": "v0.6",
+      "expected_compatibility_state": "planned_future",
+      "expected_dry_run_plan_status": "ready",
+      "required_fields": [
+        "planned_future_channel"
+      ],
+      "forbidden_fields": [
+        "active_mobile_runtime"
+      ],
+      "runtime_status": "planned",
+      "live_enabled": false,
+      "expected_boundary_status": "clear",
+      "expected_result": "accepted"
+    }
+  ]
+}
