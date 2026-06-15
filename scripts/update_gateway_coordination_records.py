@@ -11,8 +11,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODULE_ID = "forprint_integration_gateway"
 
-CURRENT_PHASE = "contract_compatibility_replay_dry_run_v0_5"
-CURRENT_COMPLETED_STEP = "gateway_contract_compatibility_ready"
+CURRENT_PHASE = "contract_release_consumer_acceptance_v0_6"
+CURRENT_COMPLETED_STEP = "gateway_contract_release_ready"
 
 V0_3_PHASE = "channel_intake_operational_handoff_contracts_v0_3"
 V0_3_COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
@@ -43,6 +43,13 @@ V0_5_IMPLEMENTATION_COMMIT = "1a7ed1d"
 V0_5_COMPLETION_REPORT_FILE = (
     "coordination/reports/"
     "gateway_v0_5_contract_compatibility_replay_dry_run_completion.md"
+)
+
+V0_6_PROMPT_ID = "gateway_contract_release_consumer_acceptance_v0_6"
+V0_6_IMPLEMENTATION_COMMIT = "7d74ec1"
+V0_6_COMPLETION_REPORT_FILE = (
+    "coordination/reports/"
+    "gateway_v0_6_contract_release_consumer_acceptance_completion.md"
 )
 
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
@@ -134,6 +141,10 @@ def refresh_current_status(updated_at: str, branch: str, commit: str) -> None:
             "contract_compatibility_check": "ok",
             "compatibility_matrix_preview": "ok",
             "replay_fixtures_preview": "ok",
+            "contract_release_check": "ok",
+            "contract_release_preview": "ok",
+            "consumer_acceptance_preview": "ok",
+            "backward_compatibility_preview": "ok",
         },
         "boundary_confirmation": build_boundary_confirmation(),
     }
@@ -185,6 +196,16 @@ def refresh_prompts_index(updated_at: str, commit: str) -> None:
                 "phase": CURRENT_PHASE,
                 "completed_step": CURRENT_COMPLETED_STEP,
                 "report_file": V0_5_COMPLETION_REPORT_FILE,
+            },
+            {
+                "prompt_id": V0_6_PROMPT_ID,
+                "source": "forprint_system_blueprint",
+                "status": "completed_in_module",
+                "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
+                "coordination_update_commit": commit,
+                "phase": CURRENT_PHASE,
+                "completed_step": CURRENT_COMPLETED_STEP,
+                "report_file": V0_6_COMPLETION_REPORT_FILE,
             },
         ],
     }
@@ -272,6 +293,32 @@ def refresh_reports_index(updated_at: str, commit: str) -> None:
                     "contract_compatibility_check": "ok",
                     "compatibility_matrix_preview": "ok",
                     "replay_fixtures_preview": "ok",
+                    "coordination_records_check": "ok",
+                    "canonical_module_id_guard": "ok",
+                    "no_live_integrations_guard": "ok",
+                    "reports_index_tracked": "ok",
+                },
+                "boundary_confirmation": build_boundary_confirmation(),
+            },
+            {
+                "report_id": V0_6_PROMPT_ID,
+                "phase": CURRENT_PHASE,
+                "status": "completed",
+                "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
+                "coordination_update_commit": commit,
+                "report_file": V0_6_COMPLETION_REPORT_FILE,
+                "validation_results": {
+                    "governance_check": "ok",
+                    "make_check": "ok",
+                    "make_check_report": "ok",
+                    "channel_intake_preview": "ok",
+                    "adapter_readiness_preview": "ok",
+                    "compatibility_matrix_preview": "ok",
+                    "replay_fixtures_preview": "ok",
+                    "contract_release_check": "ok",
+                    "contract_release_preview": "ok",
+                    "consumer_acceptance_preview": "ok",
+                    "backward_compatibility_preview": "ok",
                     "coordination_records_check": "ok",
                     "canonical_module_id_guard": "ok",
                     "no_live_integrations_guard": "ok",

@@ -1,5 +1,5 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-12T15:35:55.353999+00:00'
+updated_at: '2026-06-15T15:14:30.849566+00:00'
 prompts:
 - prompt_id: gateway_channel_intake_operational_handoff_contracts_v0_3
   source: forprint_system_blueprint
@@ -29,7 +29,15 @@ prompts:
   source: forprint_system_blueprint
   status: completed_in_module
   implementation_commit: 1a7ed1d
-  coordination_update_commit: 1a7ed1d
-  phase: contract_compatibility_replay_dry_run_v0_5
-  completed_step: gateway_contract_compatibility_ready
+  coordination_update_commit: 7d74ec1
+  phase: contract_release_consumer_acceptance_v0_6
+  completed_step: gateway_contract_release_ready
   report_file: coordination/reports/gateway_v0_5_contract_compatibility_replay_dry_run_completion.md
+- prompt_id: gateway_contract_release_consumer_acceptance_v0_6
+  source: forprint_system_blueprint
+  status: completed_in_module
+  implementation_commit: 7d74ec1
+  coordination_update_commit: 7d74ec1
+  phase: contract_release_consumer_acceptance_v0_6
+  completed_step: gateway_contract_release_ready
+  report_file: coordination/reports/gateway_v0_6_contract_release_consumer_acceptance_completion.md

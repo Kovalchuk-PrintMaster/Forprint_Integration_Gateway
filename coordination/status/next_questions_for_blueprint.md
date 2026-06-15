@@ -1,4 +1,4 @@
-# Next Questions for ForPrint System Blueprint — Integration Gateway after v0.5
+# Next Questions for ForPrint System Blueprint — Integration Gateway after v0.6
 
 ## Module
 
@@ -6,25 +6,24 @@
 
 ## Completed phase
 
-`contract_compatibility_replay_dry_run_v0_5`
+`contract_release_consumer_acceptance_v0_6`
 
 ## Completed step
 
-`gateway_contract_compatibility_ready`
+`gateway_contract_release_ready`
 
 ## Questions
 
-1. Should Gateway v0.6 extend dry-run compatibility into signed adapter contract manifests, or keep manifests deferred until real adapters are approved?
+1. Should Gateway v0.7 focus on contract migration/version graph, or should that remain owned by System Blueprint?
 
-2. Should future Gateway prompts prioritize:
-   - adapter manifest schema;
-   - contract migration/version graph;
-   - audit envelope hardening;
-   - idempotency persistence design;
-   - or cross-module compatibility pack generation?
+2. Should Gateway contract releases be consumed by other modules as copied artifacts, Git submodule references, or Blueprint-dispatched release packs?
 
-3. Should any module-specific adapter remain explicitly blocked beyond v0.5?
+3. Should future Gateway prompts add signed contract manifests, or keep signatures deferred until live adapters are approved?
 
-4. Should Accounting Registry remain limited to accounting reference candidates until sanitized accounting samples and Blueprint approval are provided?
+4. Should consumer acceptance fixtures become mandatory for every module before adapter implementation starts?
 
-5. Should Mobile App remain planned/future until Calculator Engine and channel contracts are accepted as stable?
+5. Should Accounting Registry remain limited to accounting reference candidates until sanitized accounting samples and explicit Blueprint approval are provided?
+
+6. Should Mobile App remain planned/future until Calculator Engine and channel contracts are accepted as stable?
+
+7. Should generated production SDKs remain forbidden until Blueprint approves runtime adapter strategy?

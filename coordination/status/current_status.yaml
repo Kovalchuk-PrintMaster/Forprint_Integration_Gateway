@@ -1,9 +1,9 @@
 module_id: forprint_integration_gateway
-last_updated: '2026-06-12T15:35:55.353999+00:00'
+last_updated: '2026-06-15T15:14:30.849566+00:00'
 branch: main
-last_commit: 1a7ed1d
-current_phase: contract_compatibility_replay_dry_run_v0_5
-last_completed_step: gateway_contract_compatibility_ready
+last_commit: 7d74ec1
+current_phase: contract_release_consumer_acceptance_v0_6
+last_completed_step: gateway_contract_release_ready
 checks:
   make_check: ok
   make_check_report: ok
@@ -15,6 +15,10 @@ checks:
   contract_compatibility_check: ok
   compatibility_matrix_preview: ok
   replay_fixtures_preview: ok
+  contract_release_check: ok
+  contract_release_preview: ok
+  consumer_acceptance_preview: ok
+  backward_compatibility_preview: ok
 boundary_confirmation:
   no_production_api_added: true
   no_real_external_integrations_added: true

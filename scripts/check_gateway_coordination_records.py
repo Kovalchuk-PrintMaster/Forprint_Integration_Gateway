@@ -48,6 +48,15 @@ V0_5_REPORT_FILE = (
     / "gateway_v0_5_contract_compatibility_replay_dry_run_completion.md"
 )
 
+V0_6_PROMPT_ID = "gateway_contract_release_consumer_acceptance_v0_6"
+V0_6_IMPLEMENTATION_COMMIT = "7d74ec1"
+V0_6_REPORT_FILE = (
+    PROJECT_ROOT
+    / "coordination"
+    / "reports"
+    / "gateway_v0_6_contract_release_consumer_acceptance_completion.md"
+)
+
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
 PROMPTS_INDEX_PATH = PROJECT_ROOT / "coordination" / "prompts" / "index.yaml"
 REPORTS_INDEX_PATH = PROJECT_ROOT / "coordination" / "reports" / "index.yaml"
@@ -167,6 +176,10 @@ def assert_current_status() -> None:
         "contract_compatibility_check",
         "compatibility_matrix_preview",
         "replay_fixtures_preview",
+        "contract_release_check",
+        "contract_release_preview",
+        "consumer_acceptance_preview",
+        "backward_compatibility_preview",
     }
 
     for check_name in required_checks:
@@ -238,6 +251,27 @@ def assert_prompts_index() -> None:
         if actual != expected:
             raise CoordinationCheckError(
                 f"Prompt {V0_5_PROMPT_ID}: {key}={actual!r}, "
+                f"expected {expected!r}"
+            )
+        
+    v0_6 = prompt_by_id.get(V0_6_PROMPT_ID)
+    if not isinstance(v0_6, dict):
+        raise CoordinationCheckError(f"Missing prompt record: {V0_6_PROMPT_ID}")
+
+    v0_6_expected_values = {
+        "source": "forprint_system_blueprint",
+        "status": "completed_in_module",
+        "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
+        "phase": CURRENT_PHASE,
+        "completed_step": CURRENT_COMPLETED_STEP,
+        "report_file": str(V0_6_REPORT_FILE.relative_to(PROJECT_ROOT)),
+    }
+
+    for key, expected in v0_6_expected_values.items():
+        actual = v0_6.get(key)
+        if actual != expected:
+            raise CoordinationCheckError(
+                f"Prompt {V0_6_PROMPT_ID}: {key}={actual!r}, "
                 f"expected {expected!r}"
             )
         
@@ -334,6 +368,41 @@ def assert_reports_index() -> None:
     for key, value in boundary.items():
         if value is not True:
             raise CoordinationCheckError(f"Boundary confirmation {key} must be true")
+        
+        v0_6 = report_by_id.get(V0_6_PROMPT_ID)
+        if not isinstance(v0_6, dict):
+          raise CoordinationCheckError(f"Missing report record: {V0_6_PROMPT_ID}")
+
+    v0_6_expected_values = {
+        "phase": CURRENT_PHASE,
+        "status": "completed",
+        "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
+        "report_file": str(V0_6_REPORT_FILE.relative_to(PROJECT_ROOT)),
+    }
+
+    for key, expected in v0_6_expected_values.items():
+        actual = v0_6.get(key)
+        if actual != expected:
+            raise CoordinationCheckError(
+                f"Report {V0_6_PROMPT_ID}: {key}={actual!r}, "
+                f"expected {expected!r}"
+            )
+
+    validation_results = v0_6.get("validation_results")
+    if not isinstance(validation_results, dict):
+        raise CoordinationCheckError("v0.6 report validation_results must be mapping")
+
+    for key, value in validation_results.items():
+        if value != "ok":
+            raise CoordinationCheckError(f"v0.6 validation result {key} must be ok")
+
+    boundary = v0_6.get("boundary_confirmation")
+    if not isinstance(boundary, dict):
+        raise CoordinationCheckError("v0.6 boundary_confirmation must be mapping")
+
+    for key, value in boundary.items():
+        if value is not True:
+            raise CoordinationCheckError(f"Boundary confirmation {key} must be true")
 
 
 def assert_tracked(path: Path, label: str) -> None:
@@ -356,6 +425,7 @@ def assert_reports_are_tracked() -> None:
     assert_tracked(V0_3_1_REPORT_FILE, "v0.3.1 completion report")
     assert_tracked(V0_4_REPORT_FILE, "v0.4 completion report")
     assert_tracked(V0_5_REPORT_FILE, "v0.5 completion report")
+    assert_tracked(V0_6_REPORT_FILE, "v0.6 completion report")
 
 
 def iter_text_files() -> list[Path]:
