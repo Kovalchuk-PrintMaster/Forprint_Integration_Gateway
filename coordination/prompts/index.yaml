@@ -1,5 +1,5 @@
 module_id: forprint_integration_gateway
-updated_at: '2026-06-15T16:14:45.794742+00:00'
+updated_at: '2026-06-16T15:47:57.188809+00:00'
 prompts:
 - prompt_id: gateway_channel_intake_operational_handoff_contracts_v0_3
   source: forprint_system_blueprint
@@ -41,3 +41,11 @@ prompts:
   phase: contract_release_consumer_acceptance_v0_6
   completed_step: gateway_contract_release_ready
   report_file: coordination/reports/gateway_v0_6_contract_release_consumer_acceptance_completion.md
+- prompt_id: gateway_blueprint_standards_visibility_advisory_alignment_v0_7
+  source: forprint_system_blueprint
+  status: completed_in_module
+  implementation_commit: 9f792a3
+  coordination_update_commit: 9f792a3
+  phase: blueprint_standards_visibility_advisory_alignment_v0_7
+  completed_step: gateway_blueprint_standards_visibility_ready
+  report_file: coordination/reports/gateway_v0_7_blueprint_standards_visibility_completion.md

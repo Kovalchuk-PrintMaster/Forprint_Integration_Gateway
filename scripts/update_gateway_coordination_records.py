@@ -11,8 +11,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODULE_ID = "forprint_integration_gateway"
 
-CURRENT_PHASE = "contract_release_consumer_acceptance_v0_6"
-CURRENT_COMPLETED_STEP = "gateway_contract_release_ready"
+CURRENT_PHASE = "blueprint_standards_visibility_advisory_alignment_v0_7"
+CURRENT_COMPLETED_STEP = "gateway_blueprint_standards_visibility_ready"
 
 V0_3_PHASE = "channel_intake_operational_handoff_contracts_v0_3"
 V0_3_COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
@@ -56,6 +56,15 @@ V0_6_COMPLETION_REPORT_COMMIT = "3690cc3"
 V0_6_COMPLETION_REPORT_FILE = (
     "coordination/reports/"
     "gateway_v0_6_contract_release_consumer_acceptance_completion.md"
+)
+
+V0_7_PHASE = "blueprint_standards_visibility_advisory_alignment_v0_7"
+V0_7_COMPLETED_STEP = "gateway_blueprint_standards_visibility_ready"
+V0_7_PROMPT_ID = "gateway_blueprint_standards_visibility_advisory_alignment_v0_7"
+V0_7_IMPLEMENTATION_COMMIT = "9f792a3"
+V0_7_COMPLETION_REPORT_FILE = (
+    "coordination/reports/"
+    "gateway_v0_7_blueprint_standards_visibility_completion.md"
 )
 
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
@@ -151,6 +160,10 @@ def refresh_current_status(updated_at: str, branch: str, commit: str) -> None:
             "contract_release_preview": "ok",
             "consumer_acceptance_preview": "ok",
             "backward_compatibility_preview": "ok",
+            "blueprint_standards_list": "ok",
+            "blueprint_standards_check": "ok",
+            "blueprint_standards_sync": "ok",
+            "blueprint_standards_visibility": "ok",
         },
         "boundary_confirmation": build_boundary_confirmation(),
     }
@@ -212,6 +225,16 @@ def refresh_prompts_index(updated_at: str, commit: str) -> None:
             "phase": V0_6_PHASE,
             "completed_step": V0_6_COMPLETED_STEP,
             "report_file": V0_6_COMPLETION_REPORT_FILE,
+        },
+        {
+            "prompt_id": V0_7_PROMPT_ID,
+            "source": "forprint_system_blueprint",
+            "status": "completed_in_module",
+            "implementation_commit": V0_7_IMPLEMENTATION_COMMIT,
+            "coordination_update_commit": commit,
+            "phase": V0_7_PHASE,
+            "completed_step": V0_7_COMPLETED_STEP,
+            "report_file": V0_7_COMPLETION_REPORT_FILE,
         },
         ],
     }
@@ -329,6 +352,47 @@ def refresh_reports_index(updated_at: str, commit: str) -> None:
                 "no_live_integrations_guard": "ok",
                 "reports_index_tracked": "ok",
             },
+            "boundary_confirmation": build_boundary_confirmation(),
+        },
+        {
+            "report_id": V0_7_PROMPT_ID,
+            "phase": V0_7_PHASE,
+            "status": "completed",
+            "implementation_commit": V0_7_IMPLEMENTATION_COMMIT,
+            "coordination_update_commit": commit,
+            "report_file": V0_7_COMPLETION_REPORT_FILE,
+            "validation_results": {
+                "governance_check": "ok",
+                "make_check": "ok",
+                "make_check_report": "ok",
+                "blueprint_standards_list": "ok",
+                "blueprint_standards_check": "ok",
+                "blueprint_standards_sync": "ok",
+                "blueprint_standards_visibility": "ok",
+                "channel_intake_preview": "ok",
+                "adapter_readiness_preview": "ok",
+                "compatibility_matrix_preview": "ok",
+                "replay_fixtures_preview": "ok",
+                "contract_release_check": "ok",
+                "contract_release_preview": "ok",
+                "consumer_acceptance_preview": "ok",
+                "backward_compatibility_preview": "ok",
+                "coordination_records_check": "ok",
+                "canonical_module_id_guard": "ok",
+                "no_live_integrations_guard": "ok",
+                "reports_index_tracked": "ok",
+            },
+            "standards_reviewed": [
+                "coordination/standards/index.yaml",
+                "coordination/standards/module_standards_awareness_protocol.md",
+                "coordination/standards/module_governance_protocol.md",
+                "coordination/standards/module_make_target_contract.md",
+            ],
+            "standards_alignment_notes": [
+                "Gateway added standards visibility without forcing full compliance.",
+                "Standards remain advisory unless activated by prompt/directive.",
+                "No destructive refactor was performed.",
+            ],
             "boundary_confirmation": build_boundary_confirmation(),
         },
         ],

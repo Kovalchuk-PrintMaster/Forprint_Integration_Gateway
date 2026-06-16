@@ -1,7 +1,7 @@
 snapshot_id: gateway_blueprint_standards_snapshot_v0_7
 module_id: forprint_integration_gateway
 source_blueprint_path: /srv/software_development/forprint-project/forprint_system_blueprint
-snapshot_timestamp: '2026-06-16T15:21:02.729776+00:00'
+snapshot_timestamp: '2026-06-16T15:48:42.289447+00:00'
 standards_index_path: coordination/standards/index.yaml
 standards_index_version: v0_1
 standards_count: 19

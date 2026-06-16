@@ -1,9 +1,9 @@
 module_id: forprint_integration_gateway
-last_updated: '2026-06-15T16:14:45.794742+00:00'
+last_updated: '2026-06-16T15:47:57.188809+00:00'
 branch: main
-last_commit: 3690cc3
-current_phase: contract_release_consumer_acceptance_v0_6
-last_completed_step: gateway_contract_release_ready
+last_commit: 9f792a3
+current_phase: blueprint_standards_visibility_advisory_alignment_v0_7
+last_completed_step: gateway_blueprint_standards_visibility_ready
 checks:
   make_check: ok
   make_check_report: ok
@@ -19,6 +19,10 @@ checks:
   contract_release_preview: ok
   consumer_acceptance_preview: ok
   backward_compatibility_preview: ok
+  blueprint_standards_list: ok
+  blueprint_standards_check: ok
+  blueprint_standards_sync: ok
+  blueprint_standards_visibility: ok
 boundary_confirmation:
   no_production_api_added: true
   no_real_external_integrations_added: true

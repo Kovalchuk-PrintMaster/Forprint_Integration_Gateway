@@ -12,8 +12,9 @@ import yaml
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODULE_ID = "forprint_integration_gateway"
-CURRENT_PHASE = "contract_release_consumer_acceptance_v0_6"
-CURRENT_COMPLETED_STEP = "gateway_contract_release_ready"
+
+CURRENT_PHASE = "blueprint_standards_visibility_advisory_alignment_v0_7"
+CURRENT_COMPLETED_STEP = "gateway_blueprint_standards_visibility_ready"
 
 V0_3_PHASE = "channel_intake_operational_handoff_contracts_v0_3"
 V0_3_COMPLETED_STEP = "gateway_channel_intake_contracts_ready"
@@ -59,6 +60,17 @@ V0_6_REPORT_FILE = (
     / "coordination"
     / "reports"
     / "gateway_v0_6_contract_release_consumer_acceptance_completion.md"
+)
+
+V0_7_PHASE = "blueprint_standards_visibility_advisory_alignment_v0_7"
+V0_7_COMPLETED_STEP = "gateway_blueprint_standards_visibility_ready"
+V0_7_PROMPT_ID = "gateway_blueprint_standards_visibility_advisory_alignment_v0_7"
+V0_7_IMPLEMENTATION_COMMIT = "9f792a3"
+V0_7_REPORT_FILE = (
+    PROJECT_ROOT
+    / "coordination"
+    / "reports"
+    / "gateway_v0_7_blueprint_standards_visibility_completion.md"
 )
 
 STATUS_PATH = PROJECT_ROOT / "coordination" / "status" / "current_status.yaml"
@@ -184,6 +196,10 @@ def assert_current_status() -> None:
         "contract_release_preview",
         "consumer_acceptance_preview",
         "backward_compatibility_preview",
+        "blueprint_standards_list",
+        "blueprint_standards_check",
+        "blueprint_standards_sync",
+        "blueprint_standards_visibility",
     }
 
     for check_name in required_checks:
@@ -266,8 +282,8 @@ def assert_prompts_index() -> None:
         "source": "forprint_system_blueprint",
         "status": "completed_in_module",
         "implementation_commit": V0_6_IMPLEMENTATION_COMMIT,
-        "phase": CURRENT_PHASE,
-        "completed_step": CURRENT_COMPLETED_STEP,
+        "phase": V0_6_PHASE,
+        "completed_step": V0_6_COMPLETED_STEP,
         "report_file": str(V0_6_REPORT_FILE.relative_to(PROJECT_ROOT)),
     }
 
@@ -276,6 +292,27 @@ def assert_prompts_index() -> None:
         if actual != expected:
             raise CoordinationCheckError(
                 f"Prompt {V0_6_PROMPT_ID}: {key}={actual!r}, "
+                f"expected {expected!r}"
+            )
+        
+    v0_7 = prompt_by_id.get(V0_7_PROMPT_ID)
+    if not isinstance(v0_7, dict):
+        raise CoordinationCheckError(f"Missing prompt record: {V0_7_PROMPT_ID}")
+
+    v0_7_expected_values = {
+        "source": "forprint_system_blueprint",
+        "status": "completed_in_module",
+        "implementation_commit": V0_7_IMPLEMENTATION_COMMIT,
+        "phase": V0_7_PHASE,
+        "completed_step": V0_7_COMPLETED_STEP,
+        "report_file": str(V0_7_REPORT_FILE.relative_to(PROJECT_ROOT)),
+    }
+
+    for key, expected in v0_7_expected_values.items():
+        actual = v0_7.get(key)
+        if actual != expected:
+            raise CoordinationCheckError(
+                f"Prompt {V0_7_PROMPT_ID}: {key}={actual!r}, "
                 f"expected {expected!r}"
             )
         
@@ -408,6 +445,69 @@ def assert_reports_index() -> None:
         if value is not True:
             raise CoordinationCheckError(f"Boundary confirmation {key} must be true")
 
+    v0_7 = report_by_id.get(V0_7_PROMPT_ID)
+    if not isinstance(v0_7, dict):
+        raise CoordinationCheckError(f"Missing report record: {V0_7_PROMPT_ID}")
+
+    v0_7_expected_values = {
+        "phase": V0_7_PHASE,
+        "status": "completed",
+        "implementation_commit": V0_7_IMPLEMENTATION_COMMIT,
+        "report_file": str(V0_7_REPORT_FILE.relative_to(PROJECT_ROOT)),
+    }
+
+    for key, expected in v0_7_expected_values.items():
+        actual = v0_7.get(key)
+        if actual != expected:
+            raise CoordinationCheckError(
+                f"Report {V0_7_PROMPT_ID}: {key}={actual!r}, "
+                f"expected {expected!r}"
+            )
+
+    validation_results = v0_7.get("validation_results")
+    if not isinstance(validation_results, dict):
+        raise CoordinationCheckError("v0.7 report validation_results must be mapping")
+
+    for key, value in validation_results.items():
+        if value != "ok":
+            raise CoordinationCheckError(f"v0.7 validation result {key} must be ok")
+
+    standards_reviewed = v0_7.get("standards_reviewed")
+    if not isinstance(standards_reviewed, list):
+        raise CoordinationCheckError("v0.7 standards_reviewed must be list")
+
+    for required_standard in {
+        "coordination/standards/index.yaml",
+        "coordination/standards/module_standards_awareness_protocol.md",
+        "coordination/standards/module_governance_protocol.md",
+        "coordination/standards/module_make_target_contract.md",
+    }:
+        if required_standard not in standards_reviewed:
+            raise CoordinationCheckError(
+                f"v0.7 standards_reviewed missing {required_standard}"
+            )
+
+    alignment_notes = v0_7.get("standards_alignment_notes")
+    if not isinstance(alignment_notes, list):
+        raise CoordinationCheckError("v0.7 standards_alignment_notes must be list")
+
+    for required_note in {
+        "Gateway added standards visibility without forcing full compliance.",
+        "Standards remain advisory unless activated by prompt/directive.",
+        "No destructive refactor was performed.",
+    }:
+        if required_note not in alignment_notes:
+            raise CoordinationCheckError(
+                f"v0.7 standards_alignment_notes missing {required_note}"
+            )
+
+    boundary = v0_7.get("boundary_confirmation")
+    if not isinstance(boundary, dict):
+        raise CoordinationCheckError("v0.7 boundary_confirmation must be mapping")
+
+    for key, value in boundary.items():
+        if value is not True:
+            raise CoordinationCheckError(f"Boundary confirmation {key} must be true")
 
 def assert_tracked(path: Path, label: str) -> None:
     """Ensure path is tracked by Git."""
@@ -430,6 +530,7 @@ def assert_reports_are_tracked() -> None:
     assert_tracked(V0_4_REPORT_FILE, "v0.4 completion report")
     assert_tracked(V0_5_REPORT_FILE, "v0.5 completion report")
     assert_tracked(V0_6_REPORT_FILE, "v0.6 completion report")
+    assert_tracked(V0_7_REPORT_FILE, "v0.7 completion report")
 
 
 def iter_text_files() -> list[Path]:
