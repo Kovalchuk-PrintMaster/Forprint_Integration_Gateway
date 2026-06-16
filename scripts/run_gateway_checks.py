@@ -529,6 +529,14 @@ def main() -> int:
             command=[sys.executable, "scripts/check_gateway_coordination_records.py"],
         ),
         run_command_check(
+            name="Blueprint standards visibility",
+            expected_result=(
+                "Blueprint standards index readable і local visibility "
+                "snapshot валідний"
+            ),
+            command=[sys.executable, "scripts/check_blueprint_standards.py"],
+        ),
+        run_command_check(
             name="Adapter contracts check",
             expected_result=
                 "v0.4 adapter descriptors, error taxonomy " 

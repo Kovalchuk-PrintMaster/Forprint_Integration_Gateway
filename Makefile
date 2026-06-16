@@ -6,6 +6,7 @@ PIP=.venv_gateway/bin/pip
 		coordination-records-refresh coordination-records-check
 		contract-release-check contract-release-preview 
 		consumer-acceptance-preview backward-compatibility-preview
+		blueprint-standards-list blueprint-standards-check blueprint-standards-sync
 
 install:
 	$(PIP) install --upgrade pip
@@ -92,6 +93,7 @@ module-policy-check: blueprint-check
 .PHONY: governance-check
 governance-check:
 	@echo "== ForPrint Integration Gateway governance check =="
+	$(MAKE) blueprint-standards-check
 	$(MAKE) blueprint-pull
 	$(MAKE) blueprint-check
 	$(MAKE) blueprint-sync-directives
@@ -148,3 +150,12 @@ consumer-acceptance-preview:
 
 backward-compatibility-preview:
 	$(PYTHON) scripts/run_backward_compatibility_preview.py
+
+blueprint-standards-list:
+	$(PYTHON) scripts/list_blueprint_standards.py
+
+blueprint-standards-check:
+	$(PYTHON) scripts/check_blueprint_standards.py
+
+blueprint-standards-sync:
+	$(PYTHON) scripts/sync_blueprint_standards.py

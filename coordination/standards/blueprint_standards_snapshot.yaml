@@ -1,0 +1,100 @@
+snapshot_id: gateway_blueprint_standards_snapshot_v0_7
+module_id: forprint_integration_gateway
+source_blueprint_path: /srv/software_development/forprint-project/forprint_system_blueprint
+snapshot_timestamp: '2026-06-16T15:21:02.729776+00:00'
+standards_index_path: coordination/standards/index.yaml
+standards_index_version: v0_1
+standards_count: 19
+reviewed_standards:
+- standard_id: standards_readme
+  file: README.md
+  status: advisory_guidance
+  adoption_mode: gradual_alignment
+- standard_id: configuration_policy
+  file: configuration_policy.md
+  status: target_standard
+  adoption_mode: gradual_alignment
+- standard_id: coordination_metadata_policy
+  file: coordination_metadata_policy.md
+  status: target_standard
+  adoption_mode: reference_only
+- standard_id: current_status_extension_policy
+  file: current_status_extension_policy.md
+  status: active_standard
+  adoption_mode: gradual_alignment
+- standard_id: directive_index_schema
+  file: directive_index_schema.md
+  status: active_standard
+  adoption_mode: gradual_alignment
+- standard_id: make_command_standard
+  file: make_command_standard.md
+  status: target_standard
+  adoption_mode: gradual_alignment
+- standard_id: module_alignment_policy
+  file: module_alignment_policy.md
+  status: advisory_guidance
+  adoption_mode: gradual_alignment
+- standard_id: module_assistant_start_protocol
+  file: module_assistant_start_protocol.md
+  status: active_standard
+  adoption_mode: gradual_alignment
+- standard_id: module_coordination_records_protocol
+  file: module_coordination_records_protocol.md
+  status: draft
+  adoption_mode: gradual_alignment
+- standard_id: module_governance_make_targets
+  file: module_governance_make_targets.md
+  status: target_standard
+  adoption_mode: gradual_alignment
+- standard_id: module_governance_protocol
+  file: module_governance_protocol.md
+  status: active_standard
+  adoption_mode: reference_only
+- standard_id: module_make_target_contract
+  file: module_make_target_contract.md
+  status: draft
+  adoption_mode: gradual_alignment
+- standard_id: module_outgoing_prompt_pull_protocol
+  file: module_outgoing_prompt_pull_protocol.md
+  status: active_standard
+  adoption_mode: reference_only
+- standard_id: module_pre_commit_protocol
+  file: module_pre_commit_protocol.md
+  status: active_standard
+  adoption_mode: gradual_alignment
+- standard_id: module_prompt_completion_protocol
+  file: module_prompt_completion_protocol.md
+  status: draft
+  adoption_mode: gradual_alignment
+- standard_id: module_standards_awareness_protocol
+  file: module_standards_awareness_protocol.md
+  status: active_standard
+  adoption_mode: reference_only
+- standard_id: project_structure_standard
+  file: project_structure_standard.md
+  status: target_standard
+  adoption_mode: gradual_alignment
+- standard_id: repository_structure_baseline
+  file: repository_structure_baseline.md
+  status: target_standard
+  adoption_mode: gradual_alignment
+- standard_id: testing_and_check_report_standard
+  file: testing_and_check_report_standard.md
+  status: target_standard
+  adoption_mode: reference_only
+required_reviewed_standards:
+- coordination/standards/index.yaml
+- coordination/standards/module_standards_awareness_protocol.md
+- coordination/standards/module_governance_protocol.md
+- coordination/standards/module_make_target_contract.md
+advisory_semantics_confirmation:
+  standards_are_advisory_by_default: true
+  prompts_define_concrete_work_now: true
+  directives_are_mandatory_when_explicitly_active: true
+  global_policy_defines_ecosystem_constraints: true
+  no_hard_enforcement_implied_by_standards_alone: true
+  no_destructive_refactor_from_standards_alone: true
+gateway_specific_alignment_notes:
+- Gateway added standards visibility without forcing full compliance.
+- Standards remain advisory unless activated by prompt/directive.
+- No destructive refactor was performed.

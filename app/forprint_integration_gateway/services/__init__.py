@@ -6,6 +6,15 @@ from forprint_integration_gateway.services.adapter_contracts import (
     validate_adapter_contract,
     validate_all_adapter_contracts,
 )
+from forprint_integration_gateway.services.blueprint_standards import (
+    build_standards_snapshot,
+    list_blueprint_standards,
+    resolve_standard_path,
+    validate_blueprint_standards_ready,
+    validate_blueprint_standards_visibility,
+    validate_standards_snapshot,
+    write_standards_snapshot,
+)
 from forprint_integration_gateway.services.channel_intake import (
     ChannelIntakeProcessor,
     load_channel_intake_example,
@@ -67,4 +76,11 @@ __all__ = [
     "replay_backward_compatibility_gates",
     "replay_consumer_acceptance_fixtures",
     "validate_all_contract_release",
+    "build_standards_snapshot",
+    "list_blueprint_standards",
+    "validate_blueprint_standards_ready",
+    "validate_blueprint_standards_visibility",
+    "validate_standards_snapshot",
+    "write_standards_snapshot",
+    "resolve_standard_path",
 ]
